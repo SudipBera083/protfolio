@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Bootstrap Icons (Add this line to include Bootstrap Icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.20.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <title>BG: Home page</title>
+    <!-- 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            display: flex;
+            height: 100vh;
+            /* 100% of the viewport height */
+        }
+
+        #sidebar {
+            background-color: #333;
+            color: #fff;
+            width: 250px;
+            padding: 20px;
+
+            box-shadow: 5px 5px 5px grey;
+        }
+
+        #content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 15px;
+            margin-left: 10px;
+
+        }
+
+        li:hover {
+            background-color: #333;
+            /* border: 1px solid white; */
+            box-shadow: 2px 2px 2px 2px rgb(85, 79, 79);
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: chocolate;
+        }
+
+        svg{
+            margin-right: 10px;
+        }
+
+        
+    </style> -->
+
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #2d2b2b;
+        }
+
+        #floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+
+        #nav-bar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            /* Initially hidden */
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            transition: left 0.3s ease;
+            padding-top: 60px;
+            color: #fff;
+            /* box-shadow: 5px 5px 5px grey; */
+        }
+
+        #nav-bar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #nav-bar li {
+            margin-bottom: 10px;
+        }
+
+        #nav-bar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #content {
+            padding: 0px;
+            /* margin-left: 20px; */
+            /* Adjust for the hidden navigation */
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 15px;
+            margin-left: 10px;
+
+        }
+
+        #nav-bar li:hover {
+            background-color: #333;
+            /* border: 1px solid white; */
+            box-shadow: 2px 2px 2px 2px rgb(85, 79, 79);
+        }
+
+        #nav-bar a:hover {
+            text-decoration: none;
+            color: chocolate;
+        }
+
+        svg {
+            margin-right: 10px;
+        }
+
+        .card img {
+            padding: 10px;
+            /* margin-right: 10px; */
+        }
+
+
+
+
+
+
+
+
+
+
+        /* 
+        .content{
+            padding: 0px;
+            margin: 0px;
+            border: none;
+        } */
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 10%;
+            /* padding: 0px;
+            margin: 0px;
+            border: none; */
+
+        }
+
+
+
+
+
+        #header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #header h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        #navbar {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #navbar a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 20px;
+            font-size: 18px;
+        }
+
+        #content1 {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #content1 h2 {
+            color: #333;
+        }
+
+        #content1 p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        #skills {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        #skills h2 {
+            color: #333;
+        }
+
+        .skills-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            margin-bottom: 10px;
+        }
+
+        .skills-list span {
+            font-weight: bold;
+        }
+
+        #projects {
+            padding: 20px;
+        }
+
+        #projects h2 {
+            color: #333;
+        }
+
+        .project-card {
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .project-card h3 {
+            color: #333;
+        }
+
+        .project-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <abbr title="Navigation Bar">
+        <div id="floating-btn" onclick="toggleNav()">☰</div>
+    </abbr>
+
+
+
+    <div id="container">
+        <!-- Left-Side Navigation (Sidebar) -->
+        <div id="nav-bar">
+
+
+
+            <div class="card" style="border: none; background-color: #333;">
+                <img src="https://avatars.githubusercontent.com/u/70878788?v=4" class="card-img-top" alt="..."
+                    style="border:1px solid #fff; border-radius: 50%; ">
+
+                <br>
+
+                <h3 style="color: rgb(155, 136, 122); text-align: center;">Sudip Bera</h3>
+
+
+                <div class="card-body " style="background-color: #333;">
+                    <p class="card-text" style="color:rgb(150, 116, 92)">
+                        <a href="https://github.com/SudipBera083" target="_blank" class="btn btn-success">
+                            <i class="fab fa-github"></i>
+                        </a>
+
+                        <a href="https://www.facebook.com/sudipberasrijitananda/" target="_blank"  class="btn btn-primary">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/sudipbera083/"  target="_blank" class="btn btn-info">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/itzz_bonggo_hriday/"  target="_blank" class="btn btn-danger">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+
+                    </p>
+                </div>
+            </div>
+
+
+            <ul>
+
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z" />
+                    </svg>
+
+                    <a href="#">Home</a>
+                </li>
+
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-file-earmark-ppt-fill" viewBox="0 0 16 16">
+                        <path d="M8.188 10H7V6.5h1.188a1.75 1.75 0 1 1 0 3.5z" />
+                        <path
+                            d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3zM7 5.5a1 1 0 0 0-1 1V13a.5.5 0 0 0 1 0v-2h1.188a2.75 2.75 0 0 0 0-5.5H7z" />
+                    </svg>
+                    <a href="{% url 'ProjectPage:Projects' %}">Projects</a>
+                </li>
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-data" viewBox="0 0 16 16">
+                        <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5h3Z"/>
+                        <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-12Z"/>
+                        <path d="M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7Zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1Zm4-3a1 1 0 0 0-1 1v3a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1Z"/>
+                      </svg>
+                    <a href="https://sudipbera0834.blogspot.com/">Blogs</a>
+                </li>
+
+
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                    </svg><a href="{% url 'profilePage:profileView' %}">About</a>
+                </li>
+
+                <li><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                    </svg><a href="{% url 'contact:contact' %}">Contact</a></li>
+
+
+            </ul>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- <img src="https://cdn.phenompeople.com/CareerConnectResources/prod/HONEUS/images/1920-568-coding-blog-1616781712070.png"
+                class="img-fluid main-image" alt="..."> -->
+        <!-- <h1>Welcome to Our Website</h1>
+            <p>This is the main content of your homepage. You can add text, images, and other elements here.</p>
+            <a href="#" class="button">Learn More</a> -->
+
+        <div id="header">
+            <h1 style="color: white;">Welcome to My Coding Journey</h1>
+            <p style="color: grey;">Explore my coding projects and skills</p>
+        </div>
+
+        <div id="navbar">
+
+        </div>
+
+        <div id="content1" style="border: 1px solid white;background-color: #333; color: white;">
+            <h2 style="color:white;">About Me</h2>
+            <p style="color: rgb(209, 174, 174);">
+                <ul>
+                    {% for message in data %}
+                    <li>{{ message.bio }}</li>
+                    {% endfor %}
+    
+                </ul>
+                
+            <a href="{% url 'profilePage:profileView' %}" class="button">Learn More</a>
+        </div>
+
+        <div id="skills" style="background-color: #333;">
+            <h2 style=" color: rgb(250, 250, 41);">My Skills</h2>
+            <ul class="skills-list" style="color: white;">
+                <li><span>Front-end Development:</span>
+
+                    <button type="button" class="btn btn-primary">HTML</button>
+                    <button type="button" class="btn btn-secondary">CSS</button>
+                    <button type="button" class="btn btn-success">JavaScript</button>
+                    <button type="button" class="btn btn-danger">Bootstrap</button>
+
+                </li>
+                <li><span>Back-end Development:</span>
+
+                    <button type="button" class="btn btn-outline-warning">Node.js</button>
+                    <button type="button" class="btn btn-outline-info">Django</button>
+
+
+                </li>
+
+
+                <li>
+
+                    <span>Database:</span>
+                    <button type="button" class="btn btn-primary">MongoDB</button>
+                    <button type="button" class="btn btn-dark">SQL</button>
+
+                    <button type="button" class="btn btn-light">Oracle</button>
+                    <button type="button" class="btn btn-secondary">SqLite</button>
+
+
+                </li>
+                <li><span>Version Control:</span>
+
+
+                    <button type="button" class="btn btn-outline-success">Git</button>
+                </li>
+
+                <li><span>Frameworks:</span>
+
+                    <button type="button" class="btn btn-danger"> React</button>
+                    <button type="button" class="btn btn-warning">tkinter</button>
+                    <button type="button" class="btn btn-info">Django</button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="projects" >
+            <h2 style="color: white;">My Projects</h2>
+
+            {% for message in projects %}
+            <div class="project-card" style="background-color: rgb(59, 54, 54);">
+               <h3 style="color: white">{{ message.project_name }}</h3>
+                <p style="color: rgb(11, 159, 233);">{{ message.project_desc }}</p>
+                <h6 style="color: green;">{{ message.project_duration}}</h6>
+            </div>
+                
+                {% endfor %}
+            <!-- <div class="project-card" style="background-color: rgb(59, 54, 54);">
+                <h3 style="color: white;">Project 1: Portfolio Website</h3>
+                <p style="color: white;">A personal portfolio website to showcase my skills and projects.</p>
+            </div>
+
+            <div class="project-card" style="background-color: rgb(2, 24, 43);">
+                <h3 style="color: white;">Project 2: 'BonggoQuery' -- python package</h3>
+                <p style="color: white;">An application for managing tasks and to-do lists efficiently.</p>
+            </div> -->
+
+            <!-- Add more project cards as needed -->
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function toggleNav() {
+            const navBar = document.getElementById("nav-bar");
+            // const content = document.getElementById("content");
+
+            if (navBar.style.left === "-250px") {
+                navBar.style.left = "0";
+                // content.style.marginLeft = "250px";
+            } else {
+                navBar.style.left = "-250px";
+                // content.style.marginLeft = "20px";
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>

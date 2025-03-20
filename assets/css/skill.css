@@ -18,17 +18,17 @@ $clr-red: #a63d2a;
 
 .section1 {
     width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 50em;
+    display: flex
+;
+    /* max-width: 50em; */
     margin-inline: auto;
     gap: 3.25rem;
     position: relative;
     z-index: 10;
     align-items: center;
-    padding: 5em 0;
-    justify-content: space-between;
+    padding: 5em;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 
     .card1 {
         position: relative;

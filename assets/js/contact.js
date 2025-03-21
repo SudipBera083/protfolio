@@ -8,7 +8,7 @@ document.getElementById('responseForm').addEventListener('submit', function(even
     let responseMessage = document.getElementById('responseMessage');
     
 
-    fetch('http://127.0.0.1:8000/api/submit/', {
+    fetch('https://sudipbera083.pythonanywhere.com/api/submit/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

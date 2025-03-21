@@ -32,21 +32,81 @@
   <link rel="stylesheet" href="./assets/css/cards.css">
 
 
+  <style>
+    .chat-assistant {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      /* Ensures it stays above other elements */
+    }
 
+    .chat-btn {
+      background-color: #FFD700;
+      /* Uses your accent color */
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      transition: 0.3s ease-in-out;
+    }
+
+    .chat-btn i {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+
+    .chat-btn:hover {
+      background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+      transform: scale(1.1);
+    }
+
+  
+  </style>
 
 </head>
 
 <body class="index-page">
-  <header id="header" class="header d-flex align-items-center sticky-top" >
+
+  <!-- <div class="chat-assistant">
+    <button class="chat-btn">
+      <i class="bi bi-chat-dots"></i> Chat
+    </button>
+  </div> -->
+
+
+   <!-- Chatbot Floating Button -->
+   <button class="chatbot-btn " onclick="toggleChat()">💬</button>
+
+   <!-- Chat Popup -->
+   <div class="chat-popup" id="chatPopup">
+       <div class="chat-header">Chat with me! <span onclick="toggleChat()" style="float:right; cursor:pointer;">❌</span></div>
+       <div class="chat-body" id="chatBody"></div>
+       <div class="chat-footer">
+           <input type="text" id="userInput" placeholder="Type a message...">
+           <button onclick="sendMessage()">Send</button>
+       </div>
+   </div>
+
+
+
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
     <div
-      class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between" >
+      class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.webp" alt=""> -->
         <h1 class="sitename">Developer</h1>
       </a>
 
-      <nav id="navmenu" class="navmenu" >
+      <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About</a></li>
@@ -76,16 +136,18 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
+       
         <div class="row align-items-center content">
           <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
             <p style="font-size: 20px;">Hello</p>
 
-            
-<h1>
-  <a href="" class="typewrite" data-period="2000" data-type='[ "I am Sudip.", "I am Creative.", "I Love Design.", "I Love to Develop." ]'>
-    <span class="wrap"></span>
-  </a>
-</h1>
+
+            <h1>
+              <a href="" class="typewrite" data-period="2000"
+                data-type='[ "I am Sudip.", "I am Creative.", "I Love Design.", "I Love to Develop." ]'>
+                <span class="wrap"></span>
+              </a>
+            </h1>
 
 
 
@@ -122,11 +184,16 @@
               <div class="shape-1"></div>
               <div class="shape-2"></div>
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
     <!-- /Hero Section -->
+    
 
     <!-- About Section -->
     <section id="about" class="about section">
@@ -139,15 +206,15 @@
               stroke-width="2"></path>
           </svg>
         </div>
-      
+
       </div>
       <!-- End Section Title -->
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row align-items-center">
-          <div class="col-lg-6 position-relative" data-aos="fade-right" data-aos-delay="200">
+          <div class="col-lg-6 position-relative" data-aos="fade-right" data-aos-delay="200" >
             <div class="about-image">
-              <img src="assets/img/profile/profile3.jpg" alt="Profile Image" class="img-fluid rounded-4" />
+              <img src="assets/img/profile/profile3.jpg" alt="Profile Image" class="img-fluid rounded-4 about-img" style="box-shadow: 8px 5px white;" />
             </div>
           </div>
 
@@ -212,7 +279,7 @@
               </div>
 
               <div class="signature mt-4">
-               
+
                 <div class="signature-info">
                   <h4>Sudip Bera</h4>
                   <p>
@@ -744,7 +811,7 @@
                       <h3 class="title">🚀 My Web Projects</h3>
                       <p class="time">Oct 06, 2024</p>
                     </div>
-          
+
                     <!-- Project Card -->
                     <div class="project-card">
                       <div class="project-img-container">
@@ -773,7 +840,7 @@
                       <h3 class="title">🚀 My Web Projects</h3>
                       <p class="time">Dec 16, 2024</p>
                     </div>
-          
+
                     <!-- Project Card -->
                     <div class="project-card">
                       <div class="project-img-container">
@@ -781,8 +848,10 @@
                       </div>
                       <div class="card-content">
                         <h4>🔹 b'day Celebration Bot</h4>
-                        <p>This bot is going to celebrate the b'day of your love one with a custom style of memories.</p>
-                        <a href="https://github.com/SudipBera083/b-day_Celebration_bot" target="_blank" class="github-link">
+                        <p>This bot is going to celebrate the b'day of your love one with a custom style of memories.
+                        </p>
+                        <a href="https://github.com/SudipBera083/b-day_Celebration_bot" target="_blank"
+                          class="github-link">
                           <i class="bi bi-github"></i> View on GitHub
                         </a>
                       </div>
@@ -804,7 +873,7 @@
                       <h3 class="title">🚀 My Python Package</h3>
                       <p class="time">Oct 06, 2024</p>
                     </div>
-          
+
                     <!-- Project Card -->
                     <div class="project-card">
                       <div class="project-img-container">
@@ -812,7 +881,8 @@
                       </div>
                       <div class="card-content">
                         <h4>🔹 bonggoQuery</h4>
-                        <p>Designed with simplicity and efficiency in mind, BonggoQuery is the perfect companion for developers building virtual assistants or other query-based systems.</p>
+                        <p>Designed with simplicity and efficiency in mind, BonggoQuery is the perfect companion for
+                          developers building virtual assistants or other query-based systems.</p>
                         <a href="https://github.com/SudipBera083/BonggoQuery" target="_blank" class="github-link">
                           <i class="bi bi-github"></i> View on GitHub
                         </a>
@@ -835,7 +905,7 @@
                       <h3 class="title">🚀 My Python Package</h3>
                       <p class="time">Dec 11, 2023</p>
                     </div>
-          
+
                     <!-- Project Card -->
                     <div class="project-card">
                       <div class="project-img-container">
@@ -843,8 +913,11 @@
                       </div>
                       <div class="card-content">
                         <h4>🔹 Secure-Environment</h4>
-                        <p>This project is only for enhancing the user esperience . It provides a cool interfase with some customizable applications and also helps the users to securely perform their daily primary activities.</p>
-                        <a href="https://github.com/SudipBera083/Secure-Environment" target="_blank" class="github-link">
+                        <p>This project is only for enhancing the user esperience . It provides a cool interfase with
+                          some customizable applications and also helps the users to securely perform their daily
+                          primary activities.</p>
+                        <a href="https://github.com/SudipBera083/Secure-Environment" target="_blank"
+                          class="github-link">
                           <i class="bi bi-github"></i> View on GitHub
                         </a>
                       </div>
@@ -854,20 +927,20 @@
               </div>
             </div>
 
-            
+
 
 
 
           </div>
-          
-          
+
+
 
         </div>
         <!-- End Portfolio Container -->
       </div>
       </div>
     </section>
-    
+
     <!-- Services Section -->
     <section id="services" class="services section">
       <!-- Section Title -->
@@ -916,7 +989,7 @@
                 <div class="service-item">
                   <i class="bi bi-easel icon"></i>
                   <h3>
-                    <a href="service-details.html" >ERP System Integration</a>
+                    <a href="service-details.html">ERP System Integration</a>
                   </h3>
                   <p style="color: #FFD700;">
                     Seamless integration of ERP systems with Oracle Cloud
@@ -1047,27 +1120,27 @@
               <div class="card-body p-4 p-lg-5"
                 style="background-color: #333; border-radius: 15px; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);">
 
-                <form>
+                <form id="responseForm">
                   <div class="row gy-4">
 
                     <div class="col-12">
                       <input type="text" name="name" class="form-control" placeholder="Your Name" required=""
-                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;" />
+                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;" id="name" />
                     </div>
 
                     <div class="col-12">
                       <input type="email" class="form-control" name="email" placeholder="Your Email" required=""
-                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;" />
+                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;" id="email" />
                     </div>
 
                     <div class="col-12">
                       <input type="text" class="form-control" name="subject" placeholder="Subject" required=""
-                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;" />
+                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;" id="subject" />
                     </div>
 
                     <div class="col-12">
                       <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""
-                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;"></textarea>
+                        style="background-color: #444; color: #fff; border: 2px solid #FFD700;" id="msg"></textarea>
                     </div>
 
                     <button type="submit" class="btn w-100 text-uppercase"
@@ -1076,6 +1149,7 @@
                     </button>
                   </div>
                 </form>
+                <p class="message" id="responseMessage"></p>
               </div>
             </div>
           </div>
@@ -1116,7 +1190,7 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center" ><i
       class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
@@ -1423,6 +1497,8 @@
 
   <script src="./assets/js/cards.js"></script>
   <script src="./assets/js/letterbyletter.js"></script>
+  <script src="./assets/js/chat.js"></script>
+  <script src="./assets/js/contact.js"></script>
 </body>
 
 </html>

@@ -17,7 +17,7 @@ function sendMessage() {
   chatBody.scrollTop = chatBody.scrollHeight;
 
   // Send message to Django API
-  fetch('http://127.0.0.1:8000/chat/chat/', {
+  fetch('https://sudipbera083.pythonanywhere.com/chat/chat/', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'

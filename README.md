@@ -7,8 +7,8 @@ Welcome to my personal portfolio website, showcasing my skills, projects, and pr
 Check out the live version of my portfolio: [Sudip's Portfolio](https://sudipbera083.github.io/protfolio/)
 
 ## 📂 Repository
-Explore the complete code(Frontend) on GitHub: [GitHub Repository](https://github.com/SudipBera083/protfolio)
-Explore the complete code(Backend) on GitHub: [GitHub Repository](https://github.com/SudipBera083/Protfolio_backend)
+- Explore the complete code(Frontend) on GitHub: [GitHub Repository](https://github.com/SudipBera083/protfolio)
+- Explore the complete code(Backend) on GitHub: [GitHub Repository](https://github.com/SudipBera083/Protfolio_backend)
 
 ## 🚀 Features
 

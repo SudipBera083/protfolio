@@ -774,174 +774,138 @@
 
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Portfolio</h2>
-        <div class="title-shape">
-          <svg viewBox="0 0 200 20" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 0,10 C 40,0 60,20 100,10 C 140,0 160,20 200,10" fill="none" stroke="currentColor"
-              stroke-width="2"></path>
-          </svg>
-        </div>
-        <p>
-          Building Tomorrow's Solutions with Today's Technology
-        </p>
+<section id="portfolio" class="portfolio section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header" data-aos="fade-up">
+      <h2 class="section-title">My Creative Work</h2>
+      <p class="section-subtitle">Innovative solutions crafted with passion and precision</p>
+      <div class="title-divider">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line"></span>
       </div>
-      <!-- End Section Title -->
+    </div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+    <!-- Portfolio Filter -->
+    <div class="portfolio-filter" data-aos="fade-up" data-aos-delay="100">
+      <button class="filter-btn active" data-filter="*">All Projects</button>
+      <button class="filter-btn" data-filter=".web">Web Development</button>
+      <button class="filter-btn" data-filter=".package">Python Packages</button>
+    </div>
 
-
-          <div class="portfolio-filters-container" data-aos="fade-up" data-aos-delay="200">
-            <ul class="portfolio-filters isotope-filters">
-              <li data-filter="*" class="filter-active">All Work</li>
-              <li data-filter=".filter-web">Web Design</li>
-              <li data-filter=".filter-packages">Packages</li>
-            </ul>
+    <!-- Portfolio Grid -->
+    <div class="portfolio-grid" data-aos="fade-up" data-aos-delay="200">
+      <!-- Project 1 -->
+      <div class="portfolio-item web" data-category="web">
+        <div class="portfolio-card">
+          <div class="portfolio-image">
+            <img src="./assets/img/services/python.jpg" alt="bonggoQueryWeb">
+            <div class="overlay">
+              <a href="https://github.com/SudipBera083/bonggoQueryWeb" target="_blank" class="view-btn">
+                <i class="bi bi-github"></i> View Project
+              </a>
+            </div>
           </div>
-
-          <div class="row g-4 isotope-container" data-aos="fade-up" data-aos-delay="300">
-
-
-            <div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-web">
-              <div class="app-container">
-                <div class="app-content">
-                  <div class="projects-section">
-                    <div class="projects-section-header">
-                      <h3 class="title">🚀 My Web Projects</h3>
-                      <p class="time">Oct 06, 2024</p>
-                    </div>
-
-                    <!-- Project Card -->
-                    <div class="project-card">
-                      <div class="project-img-container">
-                        <img src="./assets/img/services/python.jpg" alt="Project 1" class="project-img">
-                      </div>
-                      <div class="card-content">
-                        <h4>🔹 bonggoQueryWeb</h4>
-                        <p>Designed an AI-powered assistant using Python & NLP.</p>
-                        <a href="https://github.com/SudipBera083/bonggoQueryWeb" target="_blank" class="github-link">
-                          <i class="bi bi-github"></i> View on GitHub
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="portfolio-content">
+            <h3>bonggoQueryWeb</h3>
+            <p class="category">Web Development</p>
+            <p>AI-powered assistant built with Python & NLP for intelligent query processing.</p>
+            <div class="tech-tags">
+              <span>Python</span>
+              <span>NLP</span>
+              <span>AI</span>
             </div>
-
-
-
-            <div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-web">
-              <div class="app-container">
-                <div class="app-content">
-                  <div class="projects-section">
-                    <div class="projects-section-header">
-                      <h3 class="title">🚀 My Web Projects</h3>
-                      <p class="time">Dec 16, 2024</p>
-                    </div>
-
-                    <!-- Project Card -->
-                    <div class="project-card">
-                      <div class="project-img-container">
-                        <img src="./assets/img/services/bday.png" alt="Project 1" class="project-img">
-                      </div>
-                      <div class="card-content">
-                        <h4>🔹 b'day Celebration Bot</h4>
-                        <p>This bot is going to celebrate the b'day of your love one with a custom style of memories.
-                        </p>
-                        <a href="https://github.com/SudipBera083/b-day_Celebration_bot" target="_blank"
-                          class="github-link">
-                          <i class="bi bi-github"></i> View on GitHub
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-
-
-            <div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-packages">
-              <div class="app-container">
-                <div class="app-content">
-                  <div class="projects-section">
-                    <div class="projects-section-header">
-                      <h3 class="title">🚀 My Python Package</h3>
-                      <p class="time">Oct 06, 2024</p>
-                    </div>
-
-                    <!-- Project Card -->
-                    <div class="project-card">
-                      <div class="project-img-container">
-                        <img src="./assets/img/services/bonggoquery.png" alt="Project 1" class="project-img">
-                      </div>
-                      <div class="card-content">
-                        <h4>🔹 bonggoQuery</h4>
-                        <p>Designed with simplicity and efficiency in mind, BonggoQuery is the perfect companion for
-                          developers building virtual assistants or other query-based systems.</p>
-                        <a href="https://github.com/SudipBera083/BonggoQuery" target="_blank" class="github-link">
-                          <i class="bi bi-github"></i> View on GitHub
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-
-
-            <div class="col-lg-6 col-md-6 portfolio-item isotope-item filter-packages">
-              <div class="app-container">
-                <div class="app-content">
-                  <div class="projects-section">
-                    <div class="projects-section-header">
-                      <h3 class="title">🚀 My Python Package</h3>
-                      <p class="time">Dec 11, 2023</p>
-                    </div>
-
-                    <!-- Project Card -->
-                    <div class="project-card">
-                      <div class="project-img-container">
-                        <img src="./assets/img/services/SecureEnvironment.png" alt="Project 1" class="project-img">
-                      </div>
-                      <div class="card-content">
-                        <h4>🔹 Secure-Environment</h4>
-                        <p>This project is only for enhancing the user esperience . It provides a cool interfase with
-                          some customizable applications and also helps the users to securely perform their daily
-                          primary activities.</p>
-                        <a href="https://github.com/SudipBera083/Secure-Environment" target="_blank"
-                          class="github-link">
-                          <i class="bi bi-github"></i> View on GitHub
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-
-
           </div>
-
-
-
         </div>
-        <!-- End Portfolio Container -->
       </div>
+
+      <!-- Project 2 -->
+      <div class="portfolio-item web" data-category="web">
+        <div class="portfolio-card">
+          <div class="portfolio-image">
+            <img src="./assets/img/services/bday.png" alt="Birthday Celebration Bot">
+            <div class="overlay">
+              <a href="https://github.com/SudipBera083/b-day_Celebration_bot" target="_blank" class="view-btn">
+                <i class="bi bi-github"></i> View Project
+              </a>
+            </div>
+          </div>
+          <div class="portfolio-content">
+            <h3>Birthday Celebration Bot</h3>
+            <p class="category">Web Development</p>
+            <p>Automated celebration bot that creates personalized birthday experiences with memories.</p>
+            <div class="tech-tags">
+              <span>Automation</span>
+              <span>Python</span>
+              <span>Personalization</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+
+      <!-- Project 3 -->
+      <div class="portfolio-item package" data-category="package">
+        <div class="portfolio-card">
+          <div class="portfolio-image">
+            <img src="./assets/img/services/bonggoquery.png" alt="bonggoQuery">
+            <div class="overlay">
+              <a href="https://github.com/SudipBera083/BonggoQuery" target="_blank" class="view-btn">
+                <i class="bi bi-github"></i> View Project
+              </a>
+            </div>
+          </div>
+          <div class="portfolio-content">
+            <h3>bonggoQuery</h3>
+            <p class="category">Python Package</p>
+            <p>Lightweight query processing library for building efficient virtual assistants.</p>
+            <div class="tech-tags">
+              <span>Python</span>
+              <span>Library</span>
+              <span>NLP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="portfolio-item package" data-category="package">
+        <div class="portfolio-card">
+          <div class="portfolio-image">
+            <img src="./assets/img/services/SecureEnvironment.png" alt="Secure Environment">
+            <div class="overlay">
+              <a href="https://github.com/SudipBera083/Secure-Environment" target="_blank" class="view-btn">
+                <i class="bi bi-github"></i> View Project
+              </a>
+            </div>
+          </div>
+          <div class="portfolio-content">
+            <h3>Secure Environment</h3>
+            <p class="category">Python Package</p>
+            <p>Customizable secure interface for performing daily computing activities safely.</p>
+            <div class="tech-tags">
+              <span>Security</span>
+              <span>UI/UX</span>
+              <span>Python</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="portfolio-cta" data-aos="fade-up" data-aos-delay="300">
+      <p>Want to see more of my work?</p>
+      <a href="https://github.com/SudipBera083" target="_blank" class="btn btn-primary">
+        Visit My GitHub <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+
 
     <!-- Services Section -->
     <section id="services" class="services section">

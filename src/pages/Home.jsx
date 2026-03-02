@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import HeroTech3D from "../components/HeroTech3D"
 
 const roles = ['Full-Stack Engineer', 'Oracle SaaS Specialist', 'Django & AI Architect']
 
@@ -42,6 +43,12 @@ function AnimatedText({ text, className, style }) {
 
 export default function Home() {
     return (
+            
+
+
+
+
+
         <div className="relative z-10 min-h-screen flex items-center">
             <div className="section-container w-full">
                 <div className="max-w-4xl">
@@ -126,7 +133,7 @@ export default function Home() {
                         architect <span style={{ color: '#b14cff' }}>scalable backend systems</span>, and build
                         intelligent <span style={{ color: '#ff2d8a' }}>AI-powered solutions</span> that transform businesses.
                     </motion.p>
-
+                        <br />
                     {/* CTA Buttons */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
@@ -144,7 +151,7 @@ export default function Home() {
                             Let's Connect
                         </Link>
                     </motion.div>
-
+                        <br />
                     {/* Stats */}
                     <motion.div
                         initial={{ opacity: 0 }}

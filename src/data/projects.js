@@ -1,0 +1,58 @@
+const projects = [
+    {
+        id: 1,
+        title: 'Oracle HCM Cloud Suite',
+        description: 'Enterprise-grade HR management system built on Oracle Cloud Infrastructure. Features include workforce management, payroll automation, and AI-driven talent analytics.',
+        tags: ['Oracle HCM', 'PL/SQL', 'REST API', 'SaaS'],
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+        liveUrl: '#',
+        codeUrl: '#',
+    },
+    {
+        id: 2,
+        title: 'AI Document Analyzer',
+        description: 'Intelligent document processing platform using NLP and computer vision. Automates data extraction from invoices, contracts, and reports with 98% accuracy.',
+        tags: ['Django', 'Python', 'AI/ML', 'React'],
+        image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop',
+        liveUrl: '#',
+        codeUrl: '#',
+    },
+    {
+        id: 3,
+        title: 'ERP Integration Gateway',
+        description: 'Middleware platform connecting Oracle ERP Cloud with third-party systems. Real-time data synchronization with fault-tolerant architecture.',
+        tags: ['Node.js', 'Oracle ERP', 'SQL', 'Microservices'],
+        image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop',
+        liveUrl: '#',
+        codeUrl: '#',
+    },
+    {
+        id: 4,
+        title: 'SaaS Analytics Dashboard',
+        description: 'Real-time analytics platform for SaaS metrics. Features interactive charts, predictive analytics, and automated reporting with role-based access.',
+        tags: ['React', 'Django', 'PostgreSQL', 'D3.js'],
+        image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+        liveUrl: '#',
+        codeUrl: '#',
+    },
+    {
+        id: 5,
+        title: 'Smart Inventory System',
+        description: 'AI-powered inventory management with demand forecasting, automated reordering, and real-time stock tracking across multiple warehouses.',
+        tags: ['Python', 'React', 'TensorFlow', 'REST API'],
+        image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&h=400&fit=crop',
+        liveUrl: '#',
+        codeUrl: '#',
+    },
+    {
+        id: 6,
+        title: 'Cloud Migration Toolkit',
+        description: 'Automated cloud migration framework supporting Oracle, AWS, and Azure. Includes assessment tools, data migration pipelines, and validation suites.',
+        tags: ['Node.js', 'Oracle Cloud', 'AWS', 'Docker'],
+        image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop',
+        liveUrl: '#',
+        codeUrl: '#',
+    },
+]
+
+export default projects

@@ -5,6 +5,12 @@ import Footer from './components/Footer'
 import ThreeBackground from './components/ThreeBackground'
 import ChatBot from './components/ChatBot'
 
+const pageVariants = {
+  initial: { opacity: 0, y: 30, filter: 'blur(8px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+  exit: { opacity: 0, y: -20, filter: 'blur(4px)', transition: { duration: 0.3 } },
+}
+
 export default function App() {
   const location = useLocation()
 
@@ -15,10 +21,10 @@ export default function App() {
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.4 }}
+          variants={pageVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
         >
           <Outlet />
         </motion.main>

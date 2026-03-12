@@ -1,196 +1,273 @@
-import { motion } from 'framer-motion'
-import SkillBar from '../components/SkillBar'
+import { motion } from "framer-motion";
+import {
+RadarChart,
+Radar,
+PolarGrid,
+PolarAngleAxis,
+PolarRadiusAxis,
+ResponsiveContainer
+} from "recharts";
 
 const skills = [
-    { name: 'React / Next.js', percentage: 92, color: '#00fff2', icon: '⚛️' },
-    { name: 'Django / Python', percentage: 90, color: '#b14cff', icon: '🐍' },
-    { name: 'Oracle HCM / ERP Cloud', percentage: 88, color: '#ff2d8a', icon: '☁️' },
-    { name: 'SQL / PL/SQL', percentage: 85, color: '#4d7cff', icon: '🗄️' },
-    { name: 'Node.js / Express', percentage: 82, color: '#00ff88', icon: '🟢' },
-    { name: 'SaaS Architecture', percentage: 87, color: '#b14cff', icon: '🏗️' },
-    { name: 'AI / Machine Learning', percentage: 78, color: '#ff2d8a', icon: '🧠' },
-    { name: 'REST API Design', percentage: 90, color: '#00fff2', icon: '🔗' },
-]
+{ skill:"React", value:92 },
+{ skill:"Django", value:90 },
+{ skill:"Oracle HCM", value:88 },
+{ skill:"SQL", value:85 },
+{ skill:"Node", value:82 },
+{ skill:"SaaS", value:87 },
+{ skill:"AI", value:78 },
+{ skill:"REST APIs", value:90 }
+];
 
 const experiences = [
-    {
-        period: '2022 — Present',
-        role: 'Senior Full-Stack Engineer',
-        company: 'Enterprise SaaS Company',
-        desc: 'Leading Oracle Cloud integrations, building scalable React frontends, and architecting AI-powered analytics dashboards for enterprise clients.',
-        color: '#00fff2',
-    },
-    {
-        period: '2020 — 2022',
-        role: 'Django & Backend Architect',
-        company: 'Tech Consulting Firm',
-        desc: 'Designed microservices-based backends, RESTful APIs, and automated deployment pipelines serving 100K+ requests/day.',
-        color: '#b14cff',
-    },
-    {
-        period: '2019 — 2020',
-        role: 'Oracle SaaS Consultant',
-        company: 'IT Services Company',
-        desc: 'Implemented Oracle HCM and ERP Cloud solutions for enterprise clients. Custom PL/SQL development and third-party integrations.',
-        color: '#ff2d8a',
-    },
+{
+company:"Cognizant Technology Solutions",
+logo:"/logos/cognizant.png",
+roles:[
+{
+title:"Programmer Analyst",
+period:"Aug 2025 — Present",
+desc:"Develop enterprise Oracle Fusion HCM integrations, Fast Formula automation, and HR reporting pipelines."
+},
+{
+title:"Programmer Analyst Trainee",
+period:"Aug 2024 — Aug 2025",
+desc:"Built BI Publisher reports, HCM Extract pipelines and SQL/PLSQL data validation frameworks."
+},
+{
+title:"Oracle Cloud HCM Intern",
+period:"Feb 2024 — Jul 2024",
+desc:"Supported HR reporting automation using Fast Formula and BI Publisher development."
+}
 ]
-
-const stagger = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.08, delayChildren: 0.3 } },
+},
+{
+company:"University of Engineering & Management, Kolkata",
+logo:"/logos/uem.png",
+roles:[
+{
+title:"Bachelor of Technology — Computer Science",
+period:"2019 — 2023",
+desc:"Focused on distributed systems, backend engineering and full-stack application development."
 }
-const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+]
 }
+];
 
-export default function About() {
-    return (
-        <div className="relative z-10 min-h-screen pt-28">
-            <div className="section-container">
-                {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7 }}
-                    className="mb-16"
-                >
-                    <div className="section-label">
-                        <span className="glow-dot" />
-                        About Me
-                    </div>
-                    <h1 className="section-title">
-                        <span className="text-gradient">Crafting Digital</span>{' '}
-                        <span style={{ color: 'var(--color-text-primary)' }}>Excellence</span>
-                    </h1>
-                    <p className="section-desc">
-                        A passionate full-stack engineer at the intersection of cloud technology, artificial intelligence, and modern web architecture.
-                    </p>
-                </motion.div>
+const techStack = [
+"React","Django","Python","Oracle Cloud","Node.js","PostgreSQL",
+"MongoDB","Docker","AWS","GraphQL","REST APIs","Git","CI/CD"
+];
 
-                <div className="grid lg:grid-cols-2 gap-14">
-                    {/* Left Column */}
-                    <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                        {/* Bio */}
-                        <motion.div variants={fadeUp} className="glass p-7 mb-8" style={{ borderRadius: '22px' }}>
-                            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}>
-                                Professional Summary
-                            </h2>
-                            <p className="text-sm leading-[1.8]" style={{ color: 'var(--color-text-secondary)' }}>
-                                With extensive experience in enterprise SaaS platforms, I specialize in bridging legacy Oracle systems with modern cloud-native architectures. My expertise spans <span style={{ color: '#00fff2' }}>Oracle HCM/ERP Cloud</span> implementations, <span style={{ color: '#b14cff' }}>Django-based backend systems</span>, and <span style={{ color: '#ff2d8a' }}>React frontends</span> — enhanced with AI capabilities for intelligent automation and data-driven insights.
-                            </p>
-                        </motion.div>
+export default function About(){
 
-                        {/* Experience Timeline */}
-                        <motion.div variants={fadeUp}>
-                            <h2 className="text-xl font-bold mb-6" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}>
-                                Experience
-                            </h2>
-                            <div className="space-y-5">
-                                {experiences.map((exp, i) => (
-                                    <motion.div
-                                        key={i}
-                                        initial={{ opacity: 0, x: -30 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.5, delay: i * 0.12 }}
-                                        className="glass glass-hover p-6 relative overflow-hidden"
-                                        style={{ borderRadius: '18px' }}
-                                    >
-                                        {/* Side Accent */}
-                                        <div
-                                            className="absolute left-0 top-4 bottom-4 w-[3px] rounded-full"
-                                            style={{ background: `linear-gradient(180deg, ${exp.color}, ${exp.color}40)`, boxShadow: `0 0 12px ${exp.color}30` }}
-                                        />
-                                        <div className="pl-4">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <span className="text-[11px] font-bold tracking-wider uppercase px-3 py-1 rounded-lg"
-                                                    style={{ color: exp.color, background: `${exp.color}10`, border: `1px solid ${exp.color}20` }}>
-                                                    {exp.period}
-                                                </span>
-                                            </div>
-                                            <div className="text-base font-bold mb-0.5" style={{ color: 'var(--color-text-primary)', fontFamily: 'var(--font-display)' }}>
-                                                {exp.role}
-                                            </div>
-                                            <div className="text-sm font-medium mb-3" style={{ color: exp.color }}>{exp.company}</div>
-                                            <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>{exp.desc}</p>
-                                        </div>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </motion.div>
+return(
 
-                    {/* Right Column — Skills */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 40 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7, delay: 0.2 }}
-                    >
-                        {/* Skills Card */}
-                        <div className="glass p-7" style={{ borderRadius: '22px' }}>
-                            <div className="flex items-center justify-between mb-8">
-                                <h2 className="text-xl font-bold" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}>
-                                    Technical Proficiency
-                                </h2>
-                                <span className="text-xs font-medium px-3 py-1 rounded-full"
-                                    style={{ color: '#00fff2', background: 'rgba(0,255,242,0.06)', border: '1px solid rgba(0,255,242,0.1)' }}>
-                                    Core Stack
-                                </span>
-                            </div>
-                            {skills.map((skill, i) => (
-                                <SkillBar key={skill.name} {...skill} delay={i * 0.06} />
-                            ))}
-                        </div>
+<div className="relative min-h-screen pt-28 pb-24">
 
-                        {/* Tech Cloud */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.3 }}
-                            className="glass p-7 mt-8"
-                            style={{ borderRadius: '22px' }}
-                        >
-                            <h2 className="text-xl font-bold mb-5" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}>
-                                Technology Ecosystem
-                            </h2>
-                            <div className="flex flex-wrap gap-2.5">
-                                {['React', 'Django', 'Python', 'Oracle Cloud', 'Node.js', 'PostgreSQL', 'Redis', 'Docker', 'AWS', 'GraphQL', 'TensorFlow', 'Git', 'CI/CD', 'Kubernetes', 'TypeScript', 'MongoDB'].map((tech, i) => (
-                                    <motion.span
-                                        key={tech}
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.3, delay: 0.4 + i * 0.03 }}
-                                        whileHover={{ scale: 1.08, y: -2 }}
-                                        className="px-4 py-2 text-xs font-semibold rounded-xl cursor-default transition-colors duration-200"
-                                        style={{
-                                            background: 'rgba(255,255,255,0.03)',
-                                            border: '1px solid rgba(255,255,255,0.06)',
-                                            color: 'var(--color-text-secondary)',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.borderColor = 'rgba(0,255,242,0.2)'
-                                            e.currentTarget.style.color = '#00fff2'
-                                            e.currentTarget.style.background = 'rgba(0,255,242,0.04)'
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'
-                                            e.currentTarget.style.color = 'var(--color-text-secondary)'
-                                            e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
-                                        }}
-                                    >
-                                        {tech}
-                                    </motion.span>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                </div>
-            </div>
-        </div>
-    )
+<div className="section-container">
+
+{/* HEADER */}
+
+<motion.div
+initial={{opacity:0,y:30}}
+animate={{opacity:1,y:0}}
+transition={{duration:.7}}
+className="mb-20"
+>
+
+<h1 className="text-5xl font-bold mb-6">
+
+<span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+Engineering Scalable
+</span>{" "}
+Cloud Platforms
+
+</h1>
+
+<p className="text-gray-400 max-w-3xl leading-relaxed text-lg">
+Full-stack engineer specializing in enterprise SaaS platforms and Oracle
+Fusion Cloud technologies. I design scalable backend architectures,
+modern React applications, and intelligent automation systems.
+</p>
+
+</motion.div>
+
+
+<div className="grid lg:grid-cols-2 gap-20">
+
+
+{/* LEFT — CAREER */}
+
+<div>
+
+<h2 className="text-2xl font-bold mb-12 text-cyan-400">
+Career Journey
+</h2>
+
+<div className="relative border-l border-cyan-400/20 pl-10 space-y-14">
+
+{experiences.map((exp,i)=>(
+
+<div key={i}>
+
+{/* COMPANY */}
+
+<div className="flex items-center gap-4 mb-8">
+
+<div className="w-14 h-14 rounded-xl bg-white/5 backdrop-blur flex items-center justify-center border border-cyan-400/20">
+
+<img src={exp.logo} className="w-10"/>
+
+</div>
+
+<div>
+
+<h3 className="text-lg font-semibold text-white">
+{exp.company}
+</h3>
+
+<p className="text-xs text-gray-500">
+Organization
+</p>
+
+</div>
+
+</div>
+
+
+{/* ROLES */}
+
+<div className="space-y-6">
+
+{exp.roles.map((role,idx)=>(
+
+<motion.div
+key={idx}
+initial={{opacity:0,y:20}}
+whileInView={{opacity:1,y:0}}
+transition={{delay:idx*.1}}
+whileHover={{scale:1.03}}
+className="p-6 rounded-xl backdrop-blur border border-white/10 bg-white/5 hover:border-cyan-400/40 transition"
+>
+
+<div className="flex justify-between mb-2">
+
+<h4 className="font-semibold text-white">
+{role.title}
+</h4>
+
+<span className="text-xs text-cyan-400">
+{role.period}
+</span>
+
+</div>
+
+<p className="text-sm text-gray-400">
+{role.desc}
+</p>
+
+</motion.div>
+
+))}
+
+</div>
+
+</div>
+
+))}
+
+</div>
+
+</div>
+
+
+
+{/* RIGHT — SKILLS */}
+
+<div>
+
+
+{/* SKILL RADAR */}
+
+<div className="p-7 rounded-2xl backdrop-blur border border-white/10 bg-white/5 mb-12">
+
+<div className="flex justify-between mb-6">
+
+<h2 className="text-xl font-bold text-purple-400">
+Skill Intelligence
+</h2>
+
+<span className="text-xs px-3 py-1 rounded-full bg-cyan-400/10 text-cyan-400">
+Radar
+</span>
+
+</div>
+
+<div className="h-[340px]">
+
+<ResponsiveContainer width="100%" height="100%">
+
+<RadarChart data={skills}>
+
+<PolarGrid stroke="rgba(255,255,255,0.1)" />
+
+<PolarAngleAxis
+dataKey="skill"
+tick={{fill:"#8892B0",fontSize:11}}
+/>
+
+<PolarRadiusAxis domain={[0,100]} tick={false}/>
+
+<Radar
+dataKey="value"
+stroke="#00FFF2"
+fill="#00FFF2"
+fillOpacity={0.35}
+/>
+
+</RadarChart>
+
+</ResponsiveContainer>
+
+</div>
+
+</div>
+
+
+
+{/* TECH STACK */}
+
+<h2 className="text-xl font-bold mb-6 text-pink-400">
+Technology Ecosystem
+</h2>
+
+<div className="flex flex-wrap gap-3">
+
+{techStack.map((tech,i)=>(
+
+<motion.div
+key={tech}
+whileHover={{scale:1.08,y:-3}}
+className="px-4 py-2 rounded-lg text-sm border border-white/10 bg-white/5 hover:border-cyan-400/40 transition"
+>
+
+{tech}
+
+</motion.div>
+
+))}
+
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+);
 }

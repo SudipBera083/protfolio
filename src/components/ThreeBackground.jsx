@@ -1,206 +1,336 @@
-import { useRef, useMemo } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Points, PointMaterial } from '@react-three/drei'
-import * as THREE from 'three'
+import { useRef, useMemo, useEffect } from "react"
+import { Canvas, useFrame } from "@react-three/fiber"
+import * as THREE from "three"
 
-/* ═══════════════ NEBULA PARTICLES ═══════════════ */
-function NebulaField() {
-    const ref = useRef()
-    const count = 4000
+/* =========================
+   STAR LAYER (PARALLAX)
+========================= */
 
-    const [positions, colors] = useMemo(() => {
-        const pos = new Float32Array(count * 3)
-        const col = new Float32Array(count * 3)
-        const palette = [
-            new THREE.Color('#00fff2'),
-            new THREE.Color('#b14cff'),
-            new THREE.Color('#ff2d8a'),
-            new THREE.Color('#4d7cff'),
-        ]
+function StarLayer({ count, depth, size, speed, color }) {
 
-        for (let i = 0; i < count; i++) {
-            // Distribute in a volumetric sphere with density falloff
-            const r = 2 + Math.pow(Math.random(), 0.5) * 5
-            const theta = Math.random() * Math.PI * 2
-            const phi = Math.acos(2 * Math.random() - 1)
+  const ref = useRef()
 
-            pos[i * 3] = r * Math.sin(phi) * Math.cos(theta)
-            pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.6 // Flatten slightly
-            pos[i * 3 + 2] = r * Math.cos(phi)
+  const positions = useMemo(() => {
 
-            const color = palette[Math.floor(Math.random() * palette.length)]
-            col[i * 3] = color.r
-            col[i * 3 + 1] = color.g
-            col[i * 3 + 2] = color.b
-        }
-        return [pos, col]
-    }, [])
+    const pos = new Float32Array(count * 3)
 
-    useFrame((state) => {
-        if (ref.current) {
-            const t = state.clock.elapsedTime
-            ref.current.rotation.y = t * 0.015
-            ref.current.rotation.x = Math.sin(t * 0.05) * 0.08
-        }
-    })
+    for (let i = 0; i < count; i++) {
 
-    return (
-        <group rotation={[0.3, 0, 0.2]}>
-            <Points ref={ref} positions={positions} colors={colors} stride={3} frustumCulled={false}>
-                <PointMaterial
-                    transparent
-                    vertexColors
-                    size={0.006}
-                    sizeAttenuation
-                    depthWrite={false}
-                    blending={THREE.AdditiveBlending}
-                    opacity={0.8}
-                />
-            </Points>
-        </group>
-    )
+      pos[i * 3] = (Math.random() - 0.5) * 20
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 12
+      pos[i * 3 + 2] = -Math.random() * depth
+
+    }
+
+    return pos
+
+  }, [])
+
+  useFrame((state) => {
+
+    const t = state.clock.elapsedTime
+
+    ref.current.rotation.y = t * speed
+    ref.current.rotation.x = Math.sin(t * speed * 0.4) * 0.1
+
+  })
+
+  return (
+
+    <points ref={ref}>
+
+      <bufferGeometry>
+
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+
+      </bufferGeometry>
+
+      <pointsMaterial
+        color={color}
+        size={size}
+        transparent
+        opacity={0.9}
+        depthWrite={false}
+      />
+
+    </points>
+
+  )
+
 }
 
-/* ═══════════════ FLOATING GEOMETRY ═══════════════ */
-function FloatingIcosahedron({ position, scale, color, speed = 1 }) {
-    const ref = useRef()
+/* =========================
+   CONSTELLATION NETWORK
+========================= */
 
-    useFrame((state) => {
-        if (ref.current) {
-            const t = state.clock.elapsedTime * speed
-            ref.current.position.y = position[1] + Math.sin(t * 0.4) * 0.5
-            ref.current.position.x = position[0] + Math.cos(t * 0.3) * 0.3
-            ref.current.rotation.x = t * 0.15
-            ref.current.rotation.z = t * 0.1
+function ConstellationField() {
+
+  const pointsRef = useRef()
+  const linesRef = useRef()
+
+  const particleCount = 80
+  const maxDistance = 1.3
+
+  const { positions, velocities } = useMemo(() => {
+
+    const pos = new Float32Array(particleCount * 3)
+    const vel = new Float32Array(particleCount * 3)
+
+    for (let i = 0; i < particleCount; i++) {
+
+      pos[i * 3] = (Math.random() - 0.5) * 8
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 5
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 4
+
+      vel[i * 3] = (Math.random() - 0.5) * 0.003
+      vel[i * 3 + 1] = (Math.random() - 0.5) * 0.003
+      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.003
+
+    }
+
+    return { positions: pos, velocities: vel }
+
+  }, [])
+
+  const linePositions = useMemo(
+    () => new Float32Array(particleCount * particleCount * 3),
+    []
+  )
+
+  useFrame(() => {
+
+    const pos = pointsRef.current.geometry.attributes.position.array
+    const vel = velocities
+
+    let lineIndex = 0
+
+    for (let i = 0; i < particleCount; i++) {
+
+      pos[i * 3] += vel[i * 3]
+      pos[i * 3 + 1] += vel[i * 3 + 1]
+
+      if (pos[i * 3] > 4 || pos[i * 3] < -4) vel[i * 3] *= -1
+      if (pos[i * 3 + 1] > 3 || pos[i * 3 + 1] < -3) vel[i * 3 + 1] *= -1
+
+      for (let j = i + 1; j < particleCount; j++) {
+
+        const dx = pos[i * 3] - pos[j * 3]
+        const dy = pos[i * 3 + 1] - pos[j * 3 + 1]
+        const dz = pos[i * 3 + 2] - pos[j * 3 + 2]
+
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz)
+
+        if (dist < maxDistance) {
+
+          linePositions[lineIndex++] = pos[i * 3]
+          linePositions[lineIndex++] = pos[i * 3 + 1]
+          linePositions[lineIndex++] = pos[i * 3 + 2]
+
+          linePositions[lineIndex++] = pos[j * 3]
+          linePositions[lineIndex++] = pos[j * 3 + 1]
+          linePositions[lineIndex++] = pos[j * 3 + 2]
+
         }
-    })
 
-    return (
-        <mesh ref={ref} position={position} scale={scale}>
-            <icosahedronGeometry args={[1, 1]} />
-            <meshStandardMaterial
-                color={color}
-                emissive={color}
-                emissiveIntensity={0.25}
-                transparent
-                opacity={0.12}
-                wireframe
-                roughness={0.3}
-            />
-        </mesh>
-    )
+      }
+
+    }
+
+    pointsRef.current.geometry.attributes.position.needsUpdate = true
+
+    linesRef.current.geometry.setDrawRange(0, lineIndex / 3)
+    linesRef.current.geometry.attributes.position.needsUpdate = true
+
+  })
+
+  return (
+
+    <group>
+
+      {/* POINTS */}
+
+      <points ref={pointsRef}>
+
+        <bufferGeometry>
+
+          <bufferAttribute
+            attach="attributes-position"
+            count={positions.length / 3}
+            array={positions}
+            itemSize={3}
+          />
+
+        </bufferGeometry>
+
+        <pointsMaterial
+          color="#00fff2"
+          size={0.05}
+          transparent
+          opacity={0.9}
+        />
+
+      </points>
+
+      {/* CONNECTION LINES */}
+
+      <lineSegments ref={linesRef}>
+
+        <bufferGeometry>
+
+          <bufferAttribute
+            attach="attributes-position"
+            array={linePositions}
+            count={linePositions.length / 3}
+            itemSize={3}
+          />
+
+        </bufferGeometry>
+
+        <lineBasicMaterial
+          color="#00fff2"
+          transparent
+          opacity={0.15}
+        />
+
+      </lineSegments>
+
+    </group>
+
+  )
+
 }
 
-function FloatingTorus({ position, scale, color, speed = 1 }) {
-    const ref = useRef()
+/* =========================
+   MOUSE PARALLAX
+========================= */
 
-    useFrame((state) => {
-        if (ref.current) {
-            const t = state.clock.elapsedTime * speed
-            ref.current.position.y = position[1] + Math.sin(t * 0.35) * 0.4
-            ref.current.rotation.x = t * 0.2
-            ref.current.rotation.y = t * 0.15
-        }
-    })
+function MouseParallax({ children }) {
 
-    return (
-        <mesh ref={ref} position={position} scale={scale}>
-            <torusGeometry args={[1, 0.3, 16, 32]} />
-            <meshStandardMaterial
-                color={color}
-                emissive={color}
-                emissiveIntensity={0.2}
-                transparent
-                opacity={0.08}
-                wireframe
-                roughness={0.4}
-            />
-        </mesh>
-    )
+  const group = useRef()
+  const mouse = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+
+    const move = (e) => {
+
+      mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2
+      mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2
+
+    }
+
+    window.addEventListener("mousemove", move)
+
+    return () => window.removeEventListener("mousemove", move)
+
+  }, [])
+
+  useFrame(() => {
+
+    if (!group.current) return
+
+    group.current.rotation.y +=
+      (mouse.current.x * 0.3 - group.current.rotation.y) * 0.02
+
+    group.current.rotation.x +=
+      (-mouse.current.y * 0.3 - group.current.rotation.x) * 0.02
+
+  })
+
+  return <group ref={group}>{children}</group>
+
 }
 
-function FloatingOctahedron({ position, scale, color, speed = 1 }) {
-    const ref = useRef()
+/* =========================
+   CAMERA FLOAT
+========================= */
 
-    useFrame((state) => {
-        if (ref.current) {
-            const t = state.clock.elapsedTime * speed
-            ref.current.position.y = position[1] + Math.sin(t * 0.5) * 0.35
-            ref.current.position.x = position[0] + Math.sin(t * 0.2) * 0.2
-            ref.current.rotation.y = t * 0.25
-            ref.current.rotation.z = t * 0.1
-        }
-    })
-
-    return (
-        <mesh ref={ref} position={position} scale={scale}>
-            <octahedronGeometry args={[1, 0]} />
-            <meshStandardMaterial
-                color={color}
-                emissive={color}
-                emissiveIntensity={0.3}
-                transparent
-                opacity={0.1}
-                wireframe
-                roughness={0.3}
-            />
-        </mesh>
-    )
-}
-
-/* ═══════════════ LIGHT ORBS ═══════════════ */
-function LightOrb({ position, color, intensity = 2 }) {
-    const ref = useRef()
-
-    useFrame((state) => {
-        if (ref.current) {
-            const t = state.clock.elapsedTime
-            ref.current.position.y = position[1] + Math.sin(t * 0.3) * 0.5
-            ref.current.position.x = position[0] + Math.cos(t * 0.2) * 0.3
-        }
-    })
-
-    return <pointLight ref={ref} position={position} color={color} intensity={intensity} distance={8} decay={2} />
-}
-
-/* ═══════════════ AUTO-MOVING CAMERA ═══════════════ */
 function CameraRig() {
-    useFrame((state) => {
-        const t = state.clock.elapsedTime
-        state.camera.position.x = Math.sin(t * 0.05) * 0.5
-        state.camera.position.y = Math.cos(t * 0.04) * 0.3
-        state.camera.lookAt(0, 0, 0)
-    })
-    return null
+
+  useFrame((state) => {
+
+    const t = state.clock.elapsedTime
+
+    state.camera.position.x = Math.sin(t * 0.05) * 0.6
+    state.camera.position.y = Math.cos(t * 0.04) * 0.3
+
+    state.camera.lookAt(0, 0, 0)
+
+  })
+
+  return null
+
 }
 
-/* ═══════════════ MAIN EXPORT ═══════════════ */
+/* =========================
+   MAIN BACKGROUND
+========================= */
+
 export default function ThreeBackground() {
-    return (
-        <div id="three-canvas">
-            <Canvas
-                camera={{ position: [0, 0, 5], fov: 55 }}
-                gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
-                dpr={[1, 1.5]}
-            >
-                <ambientLight intensity={0.08} />
-                <CameraRig />
 
-                {/* Nebula Particles */}
-                <NebulaField />
+  return (
 
-                {/* Floating Geometric Objects */}
-                <FloatingIcosahedron position={[-3.5, 1.5, -4]} scale={0.5} color="#00fff2" speed={0.8} />
-                <FloatingTorus position={[4, -1, -5]} scale={0.4} color="#b14cff" speed={0.6} />
-                <FloatingOctahedron position={[-2, -2, -3]} scale={0.35} color="#ff2d8a" speed={0.9} />
-                <FloatingIcosahedron position={[3, 2.5, -6]} scale={0.6} color="#4d7cff" speed={0.5} />
-                <FloatingOctahedron position={[0, 3, -5]} scale={0.3} color="#00fff2" speed={0.7} />
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: -1,
+        pointerEvents: "none"
+      }}
+    >
 
-                {/* Light Orbs for volumetric feel */}
-                <LightOrb position={[-3, 2, -2]} color="#00fff2" intensity={1.5} />
-                <LightOrb position={[3, -1, -3]} color="#b14cff" intensity={1.2} />
-                <LightOrb position={[0, 0, -4]} color="#ff2d8a" intensity={0.8} />
-            </Canvas>
-        </div>
-    )
+      <Canvas
+        camera={{ position: [0, 0, 6], fov: 60 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: false, powerPreference: "high-performance" }}
+      >
+
+        <ambientLight intensity={0.25} />
+
+        <CameraRig />
+
+        <MouseParallax>
+
+          {/* FAR STARS */}
+          <StarLayer
+            count={800}
+            depth={20}
+            size={0.015}
+            speed={0.002}
+            color="#4d7cff"
+          />
+
+          {/* MID STARS */}
+          <StarLayer
+            count={500}
+            depth={12}
+            size={0.02}
+            speed={0.004}
+            color="#b14cff"
+          />
+
+          {/* NEAR STARS */}
+          <StarLayer
+            count={250}
+            depth={8}
+            size={0.03}
+            speed={0.006}
+            color="#00fff2"
+          />
+
+          {/* CONSTELLATION */}
+          <ConstellationField />
+
+        </MouseParallax>
+
+      </Canvas>
+
+    </div>
+
+  )
+
 }

@@ -1,191 +1,251 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
-import HeroTech3D from "../components/HeroTech3D"
+import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import SkillConstellation from "../components/SkillConstellation"
+import ProjectTimeline from "../components/ProjectTimeline"
+import {
+ResponsiveContainer,
+LineChart,
+Line,
+XAxis,
+YAxis,
+Tooltip
+} from "recharts"
 
-const roles = ['Full-Stack Engineer', 'Oracle SaaS Specialist', 'Django & AI Architect']
+const roles = [
+"Full-Stack Engineer",
+"Oracle SaaS Specialist",
+"Django & AI Architect"
+]
 
-const letterAnim = {
-    hidden: { opacity: 0, y: 50, rotateX: -90 },
-    visible: (i) => ({
-        opacity: 1, y: 0, rotateX: 0,
-        transition: { duration: 0.6, delay: 0.5 + i * 0.03, ease: [0.25, 0.46, 0.45, 0.94] },
-    }),
-}
+const projectGrowth = [
+{year:"2021",projects:5},
+{year:"2022",projects:12},
+{year:"2023",projects:18},
+{year:"2024",projects:26},
+{year:"2025",projects:30}
+]
 
-const stagger = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 1.2 } },
-}
+export default function Home(){
 
-const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 },
-}
+return(
 
-function AnimatedText({ text, className, style }) {
-    return (
-        <span className={className} style={{ ...style, display: 'inline-flex', flexWrap: 'wrap' }}>
-            {text.split('').map((char, i) => (
-                <motion.span
-                    key={i}
-                    custom={i}
-                    variants={letterAnim}
-                    initial="hidden"
-                    animate="visible"
-                    style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}
-                >
-                    {char}
-                </motion.span>
-            ))}
-        </span>
-    )
-}
+<div className="relative z-10 min-h-screen flex items-center">
 
-export default function Home() {
-    return (
-            
+<div className="section-container w-full">
 
+<div className="grid lg:grid-cols-2 gap-16 items-center">
 
+{/* LEFT SIDE */}
 
+<div>
+
+{/* Availability Badge */}
+
+<motion.div
+initial={{opacity:0,scale:.8}}
+animate={{opacity:1,scale:1}}
+transition={{duration:.8}}
+className="inline-flex items-center gap-3 px-5 py-2 rounded-full mb-10"
+style={{
+background:"linear-gradient(135deg, rgba(0,255,242,0.06), rgba(177,76,255,0.04))",
+border:"1px solid rgba(0,255,242,0.12)"
+}}
+>
+
+<span className="glow-dot"/>
+<span className="text-xs font-semibold tracking-wide text-cyan-300">
+Open to Opportunities
+</span>
+
+</motion.div>
 
 
-        <div className="relative z-10 min-h-screen flex items-center">
-            <div className="section-container w-full">
-                <div className="max-w-4xl">
+{/* HERO TITLE */}
 
-                    {/* Availability Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-                        animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                        transition={{ duration: 0.8, delay: 0.1 }}
-                        className="inline-flex items-center gap-3 px-5 py-2 rounded-full mb-10"
-                        style={{
-                            background: 'linear-gradient(135deg, rgba(0,255,242,0.06), rgba(177,76,255,0.04))',
-                            border: '1px solid rgba(0,255,242,0.12)',
-                        }}
-                    >
-                        <span className="glow-dot" />
-                        <span className="text-xs font-semibold tracking-wide" style={{ color: '#00fff2' }}>
-                            Open to Opportunities
-                        </span>
-                    </motion.div>
+<h1
+className="text-5xl sm:text-6xl md:text-7xl font-black leading-tight mb-6"
+style={{fontFamily:"var(--font-display)"}}
+>
 
-                    {/* Cinematic Heading */}
-                    <h1
-                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] mb-3"
-                        style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.03em' }}
-                    >
-                        <motion.span
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.7, delay: 0.2 }}
-                            className="block"
-                            style={{ color: 'var(--color-text-primary)' }}
-                        >
-                            Hi, I'm
-                        </motion.span>
-                        <AnimatedText
-                            text="Sudip Bera"
-                            className="text-gradient-hero text-glow block"
-                        />
-                    </h1>
+Hi, I'm
 
-                    {/* Role Tags */}
-                    <motion.div
-                        variants={stagger}
-                        initial="hidden"
-                        animate="visible"
-                        className="flex flex-wrap gap-3 mt-6 mb-8"
-                    >
-                        {roles.map((role) => (
-                            <motion.span
-                                key={role}
-                                variants={fadeUp}
-                                className="px-4 py-2 rounded-xl text-sm font-medium"
-                                style={{
-                                    background: 'rgba(255,255,255,0.03)',
-                                    border: '1px solid rgba(255,255,255,0.06)',
-                                    color: 'var(--color-text-secondary)',
-                                }}
-                            >
-                                {role}
-                            </motion.span>
-                        ))}
-                    </motion.div>
+<span className="block text-gradient-hero text-glow">
+Sudip Bera
+</span>
 
-                    {/* Glowing Divider */}
-                    <motion.div
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ duration: 1.2, delay: 1.4, ease: 'easeInOut' }}
-                        className="glow-line w-32 my-8 origin-left"
-                    />
+</h1>
 
-                    {/* Description */}
-                    <motion.p
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 1.5 }}
-                        className="text-lg md:text-xl leading-relaxed max-w-2xl mb-12"
-                        style={{ color: 'var(--color-text-secondary)' }}
-                    >
-                        I engineer <span style={{ color: '#00fff2' }}>enterprise-grade SaaS platforms</span>,
-                        architect <span style={{ color: '#b14cff' }}>scalable backend systems</span>, and build
-                        intelligent <span style={{ color: '#ff2d8a' }}>AI-powered solutions</span> that transform businesses.
-                    </motion.p>
-                        <br />
-                    {/* CTA Buttons */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 1.7 }}
-                        className="flex flex-wrap gap-4 mb-20"
-                    >
-                        <Link to="/projects" className="btn-primary">
-                            Explore My Work
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                        </Link>
-                        <Link to="/contact" className="btn-outline">
-                            Let's Connect
-                        </Link>
-                    </motion.div>
-                        <br />
-                    {/* Stats */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 2 }}
-                        className="flex flex-wrap gap-12 pt-10"
-                        style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
-                    >
-                        {[
-                            { value: '5+', label: 'Years Experience', color: '#00fff2' },
-                            { value: '30+', label: 'Projects Shipped', color: '#b14cff' },
-                            { value: '15+', label: 'Enterprise Clients', color: '#ff2d8a' },
-                            { value: '99%', label: 'Client Satisfaction', color: '#4d7cff' },
-                        ].map((stat, i) => (
-                            <motion.div
-                                key={stat.label}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 2.1 + i * 0.1 }}
-                            >
-                                <div
-                                    className="text-3xl md:text-4xl font-black mb-1"
-                                    style={{ fontFamily: 'var(--font-display)', color: stat.color, textShadow: `0 0 30px ${stat.color}30` }}
-                                >
-                                    {stat.value}
-                                </div>
-                                <div className="text-xs font-medium tracking-wide uppercase" style={{ color: 'var(--color-text-muted)' }}>
-                                    {stat.label}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
-            </div>
-        </div>
-    )
+
+{/* ROLE TAGS */}
+
+<div className="flex flex-wrap gap-3 mb-8">
+
+{roles.map(role=>(
+<span
+key={role}
+className="px-4 py-2 rounded-xl text-sm"
+style={{
+background:"rgba(255,255,255,0.03)",
+border:"1px solid rgba(255,255,255,0.06)",
+color:"var(--color-text-secondary)"
+}}
+>
+{role}
+</span>
+))}
+
+</div>
+
+
+{/* DESCRIPTION */}
+
+<p className="text-lg leading-relaxed max-w-xl mb-10 text-gray-400">
+
+I engineer <span className="text-cyan-400">enterprise-grade SaaS platforms</span>,
+architect <span className="text-purple-400">scalable backend systems</span>,
+and build intelligent <span className="text-pink-400">AI-powered solutions</span>
+that transform businesses.
+
+</p>
+
+<br />
+{/* CTA BUTTONS */}
+
+<div className="flex gap-4 mb-16">
+
+<Link to="/projects" className="btn-primary">
+Explore My Work →
+</Link>
+
+<Link to="/contact" className="btn-outline">
+Let's Connect
+</Link>
+
+</div>
+
+
+{/* STATS */}
+<br />
+<div
+className="flex flex-wrap gap-12 pt-10"
+style={{borderTop:"1px solid rgba(255,255,255,0.05)"}}
+>
+
+{[
+{value:"2+",label:"Years Experience",color:"#00fff2"},
+{value:"10+",label:"Projects Shipped",color:"#b14cff"},
+{value:"5+",label:"Enterprise Clients",color:"#ff2d8a"},
+{value:"99%",label:"Client Satisfaction",color:"#4d7cff"}
+].map(stat=>(
+<div key={stat.label}>
+
+<div
+className="text-3xl font-bold"
+style={{color:stat.color}}
+>
+{stat.value}
+</div>
+
+<div className="text-xs text-gray-500 uppercase">
+{stat.label}
+</div>
+
+</div>
+))}
+
+</div>
+
+</div>
+
+
+{/* RIGHT SIDE VISUAL PANEL */}
+
+<div className="space-y-10">
+
+
+{/* PROFILE CARD */}
+
+<div className="glass p-6 rounded-2xl flex items-center gap-6">
+
+<img
+  src="/logos/sudip.png"
+  alt="Sudip Bera"
+  className="w-24 h-24 rounded-full border border-cyan-400/40"
+/>
+
+<div>
+
+<h3 className="font-semibold text-lg">
+Sudip Bera
+</h3>
+
+<p className="text-sm text-gray-400">
+Full-Stack & Oracle Cloud Engineer
+</p>
+
+</div>
+
+</div>
+
+
+{/* SKILL CONSTELLATION */}
+
+<SkillConstellation/>
+
+
+{/* PROJECT GROWTH CHART */}
+
+<div className="glass p-6 rounded-2xl">
+
+<h3 className="text-lg font-semibold mb-4 text-purple-300">
+Project Growth
+</h3>
+
+<div className="h-[220px]">
+
+<ResponsiveContainer width="100%" height="100%">
+
+<LineChart data={projectGrowth}>
+
+<XAxis dataKey="year" stroke="#666"/>
+<YAxis stroke="#666"/>
+
+<Tooltip
+contentStyle={{
+background:"#0a0f1e",
+border:"1px solid #222"
+}}
+/>
+
+<Line
+type="monotone"
+dataKey="projects"
+stroke="#b14cff"
+strokeWidth={3}
+/>
+
+</LineChart>
+
+</ResponsiveContainer>
+
+</div>
+
+</div>
+
+
+{/* PROJECT TIMELINE */}
+
+{/* <ProjectTimeline/> */}
+
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+)
+
 }

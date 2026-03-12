@@ -6,7 +6,7 @@ description:"AI-powered assistant built with Python & NLP for intelligent query 
 image:"/projects/bqw.png",
 github:"https://github.com/SudipBera083/bonggoQueryWeb.git",
 repo:"https://github.com/username/ai-saas-platform",
-demo:"/about",
+demo:null,
 stack:["React","Django","AI","PostgreSQL"]
 },
 {
@@ -16,7 +16,7 @@ description:"A comprehensive Django-based web application for physiotherapy clin
 image:"/projects/physio.png",
 github:"https://github.com/SudipBera083/PhysioExpert.git",
 repo:"https://github.com/username/oracle-hcm",
-demo:"#",
+demo:null,
 stack:["Oracle","SQL","Integration","SAAS","cloud"]
 }
 ]

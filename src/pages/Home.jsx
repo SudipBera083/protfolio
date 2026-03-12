@@ -194,7 +194,7 @@ Full-Stack & Oracle Cloud Engineer
 
 
 {/* PROJECT GROWTH CHART */}
-
+<br />
 <div className="glass p-6 rounded-2xl">
 
 <h3 className="text-lg font-semibold mb-4 text-purple-300">

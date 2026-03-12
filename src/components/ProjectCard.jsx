@@ -144,7 +144,7 @@ className="text-xs px-2 py-1 rounded bg-black/50 border border-white/10 backdrop
 <h3 className="text-lg font-semibold text-white mb-2">
 {project.title}
 </h3>
-
+<br />
 <p className="text-sm text-gray-400 mb-4">
 {project.description}
 </p>
@@ -168,7 +168,7 @@ className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10"
 
 
 {/* GITHUB STATS */}
-
+<br />
 {stats && (
 
 <div className="flex gap-4 text-xs text-gray-400 mb-4">
@@ -209,7 +209,6 @@ Live Demo →
 </a>
 
 )}
-
 </div>
 
 </div>

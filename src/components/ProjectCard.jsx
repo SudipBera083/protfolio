@@ -1,222 +1,166 @@
-import { motion, useAnimationFrame } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 
 export default function ProjectCard({ project, index }) {
 
-const [stats,setStats] = useState(null)
-const [rotate,setRotate] = useState({x:0,y:0})
-const orbitAngle = useRef(0)
+  const [stats, setStats] = useState(null)
+  const [rotate, setRotate] = useState({ x: 0, y: 0 })
 
-useEffect(()=>{
+  useEffect(() => {
 
-if(!project.github) return
+    if (!project.github) return
 
-fetch(project.github)
-.then(res=>res.json())
-.then(data=>{
-setStats({
-stars:data.stargazers_count,
-forks:data.forks_count,
-watchers:data.watchers_count
-})
-})
+    fetch(project.github)
+      .then(res => res.json())
+      .then(data => {
+        setStats({
+          stars: data.stargazers_count,
+          forks: data.forks_count,
+          watchers: data.watchers_count
+        })
+      })
 
-},[project.github])
+  }, [project.github])
 
 
-useAnimationFrame((t,delta)=>{
-orbitAngle.current += delta * 0.00025
-})
+  const handleMove = (e) => {
 
+    const rect = e.currentTarget.getBoundingClientRect()
 
-/* MOUSE TILT */
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
 
-const handleMove = (e)=>{
+    const rotateX = -(y - rect.height / 2) / 25
+    const rotateY = (x - rect.width / 2) / 25
 
-const rect = e.currentTarget.getBoundingClientRect()
+    setRotate({ x: rotateX, y: rotateY })
+  }
 
-const x = e.clientX - rect.left
-const y = e.clientY - rect.top
+  const reset = () => setRotate({ x: 0, y: 0 })
 
-const rotateX = -(y - rect.height/2)/18
-const rotateY = (x - rect.width/2)/18
 
-setRotate({x:rotateX,y:rotateY})
+  return (
 
-}
+    <div
+      style={{ perspective: "1200px" }}
+      onMouseMove={handleMove}
+      onMouseLeave={reset}
+    >
 
-const reset = ()=>setRotate({x:0,y:0})
+      <motion.div
 
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1 }}
 
-const radius = 70
+        style={{
+          transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
+          transformStyle: "preserve-3d"
+        }}
 
-return(
+        className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl transition duration-300 hover:-translate-y-2 hover:shadow-xl"
 
-<div
-className="relative perspective-[1400px]"
-onMouseMove={handleMove}
-onMouseLeave={reset}
->
+      >
 
-<motion.div
+        {/* IMAGE */}
 
-initial={{opacity:0,y:40}}
-animate={{opacity:1,y:0}}
-transition={{delay:index*0.1}}
+        <div
+          className="relative h-52 overflow-hidden"
+          style={{ transform: "translateZ(40px)" }}
+        >
 
-style={{
-transform:`rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`
-}}
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
+          />
 
-className="group relative overflow-hidden rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 transition duration-300"
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
->
+        </div>
 
-{/* HOLOGRAPHIC LAYER */}
 
-<div
-className="absolute inset-0 opacity-0 group-hover:opacity-100 transition"
-style={{
-background:"linear-gradient(120deg,rgba(0,255,242,0.15),rgba(177,76,255,0.15),rgba(255,45,138,0.15))",
-mixBlendMode:"overlay"
-}}
-/>
+        {/* CONTENT */}
 
+        <div
+          className="p-6"
+          style={{ transform: "translateZ(80px)" }}
+        >
 
-{/* GLOW BORDER */}
+          <h3 className="text-lg font-semibold text-white mb-2">
+            {project.title}
+          </h3>
 
-<div
-className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition"
-style={{
-background:"linear-gradient(120deg,#00fff2,#b14cff,#ff2d8a)",
-filter:"blur(30px)",
-zIndex:-1
-}}
-/>
+          <p className="text-sm text-gray-400 mb-4">
+            {project.description}
+          </p>
 
 
-{/* IMAGE AREA */}
+          {/* TECH STACK */}
 
-<div className="relative h-56 overflow-hidden flex items-center justify-center">
+          <div className="flex flex-wrap gap-2 mb-4">
 
-<img
-src={project.image}
-alt={project.title}
-className="absolute w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80"
-/>
+            {(project.stack || []).map(tech => (
 
-<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"/>
+              <span
+                key={tech}
+                className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10"
+              >
+                {tech}
+              </span>
 
+            ))}
 
-{/* ORBITING TECH */}
+          </div>
 
-{(project.stack||[]).map((tech,i)=>{
 
-const angle = orbitAngle.current + (i*(Math.PI*2))/(project.stack.length||1)
+          {/* GITHUB STATS */}
 
-const x = Math.cos(angle)*radius
-const y = Math.sin(angle)*radius
+          {stats && (
 
-return(
+            <div className="flex gap-4 text-xs text-gray-400 mb-4">
 
-<div
-key={tech}
-style={{
-position:"absolute",
-transform:`translate(${x}px,${y}px)`
-}}
-className="text-xs px-2 py-1 rounded bg-black/50 border border-white/10 backdrop-blur"
->
-{tech}
-</div>
+              <span>⭐ {stats.stars}</span>
+              <span>🍴 {stats.forks}</span>
+              <span>👁 {stats.watchers}</span>
 
-)
+            </div>
 
-})}
+          )}
 
-</div>
 
+          {/* LINKS */}
 
-{/* CONTENT */}
+          <div className="flex gap-4 text-sm">
 
-<div className="p-6 relative">
+            {project.repo && (
+              <a
+                href={project.github}
+                target="_blank"
+                className="text-cyan-400 hover:text-cyan-300"
+              >
+                GitHub →
+              </a>
+            )}
 
-<h3 className="text-lg font-semibold text-white mb-2">
-{project.title}
-</h3>
-<br />
-<p className="text-sm text-gray-400 mb-4">
-{project.description}
-</p>
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                className="text-purple-400 hover:text-purple-300"
+              >
+                Live Demo →
+              </a>
+            )}
 
+          </div>
 
-{/* TECH TAGS */}
+        </div>
 
-<div className="flex flex-wrap gap-2 mb-4">
+      </motion.div>
 
-{(project.stack||[]).map((tech)=>(
-<motion.span
-key={tech}
-whileHover={{scale:1.15,y:-2}}
-className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10"
->
-{tech}
-</motion.span>
-))}
+    </div>
 
-</div>
-
-
-{/* GITHUB STATS */}
-<br />
-{stats && (
-
-<div className="flex gap-4 text-xs text-gray-400 mb-4">
-
-<span>⭐ {stats.stars}</span>
-<span>🍴 {stats.forks}</span>
-<span>👁 {stats.watchers}</span>
-
-</div>
-
-)}
-
-
-{/* ACTION BUTTONS */}
-
-<div className="flex gap-4 text-sm">
-
-{project.repo && (
-
-<a
-href={project.repo}
-target="_blank"
-className="text-cyan-400 hover:text-cyan-300 transition"
->
-GitHub →
-</a>
-
-)}
-
-{project.demo && (
-
-<a
-href={project.demo}
-target="_blank"
-className="text-purple-400 hover:text-purple-300 transition"
->
-Live Demo →
-</a>
-
-)}
-</div>
-
-</div>
-
-</motion.div>
-
-</div>
-
-)
+  )
 
 }

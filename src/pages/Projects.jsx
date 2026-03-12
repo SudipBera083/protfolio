@@ -27,7 +27,7 @@ export default function Projects() {
                         <span style={{ color: 'var(--color-text-primary)' }}>Projects</span>
                     </h1>
                     <p className="section-desc">
-                        Enterprise SaaS platforms, AI-powered tools, and scalable cloud solutions built for real-world impact at scale.
+                        Building end-to-end digital solutions with modern frontend development, scalable backend architecture, and enterprise cloud technologies.
                     </p>
                 </motion.div>
 

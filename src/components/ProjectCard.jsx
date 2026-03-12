@@ -1,153 +1,174 @@
-import { useRef, useState } from 'react'
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
 
 export default function ProjectCard({ project, index }) {
-    const ref = useRef(null)
-    const [isHovered, setIsHovered] = useState(false)
 
-    const x = useMotionValue(0)
-    const y = useMotionValue(0)
+const [stats,setStats] = useState(null)
+const [rotate,setRotate] = useState({x:0,y:0})
 
-    const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [8, -8]), { stiffness: 300, damping: 30 })
-    const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-8, 8]), { stiffness: 300, damping: 30 })
+useEffect(()=>{
 
-    const handleMouse = (e) => {
-        if (!ref.current) return
-        const rect = ref.current.getBoundingClientRect()
-        const px = (e.clientX - rect.left) / rect.width - 0.5
-        const py = (e.clientY - rect.top) / rect.height - 0.5
-        x.set(px)
-        y.set(py)
-    }
+if(!project.github) return
 
-    const handleMouseLeave = () => {
-        x.set(0)
-        y.set(0)
-        setIsHovered(false)
-    }
+fetch(project.github)
+.then(res=>res.json())
+.then(data=>{
+setStats({
+stars:data.stargazers_count,
+forks:data.forks_count,
+watchers:data.watchers_count
+})
+})
 
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            style={{ perspective: 1000 }}
-        >
-            <motion.div
-                ref={ref}
-                onMouseMove={handleMouse}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={handleMouseLeave}
-                style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-                className="relative cursor-pointer group"
-            >
-                {/* Animated Glow Border */}
-                <div
-                    className="absolute -inset-[1px] rounded-[22px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                        background: `conic-gradient(from ${isHovered ? '180deg' : '0deg'}, transparent 40%, #00fff260, #b14cff60, transparent 60%)`,
-                        filter: 'blur(1px)',
-                        transition: 'all 0.5s',
-                    }}
-                />
+},[project.github])
 
-                {/* Card Body */}
-                <div className="glass relative overflow-hidden" style={{ borderRadius: '22px' }}>
-                    {/* Image */}
-                    <div className="relative overflow-hidden" style={{ height: '220px' }}>
-                        <motion.img
-                            src={project.image}
-                            alt={project.title}
-                            className="w-full h-full object-cover"
-                            animate={{ scale: isHovered ? 1.08 : 1 }}
-                            transition={{ duration: 0.6 }}
-                        />
-                        {/* Gradient Overlay */}
-                        <div
-                            className="absolute inset-0"
-                            style={{
-                                background: `linear-gradient(180deg, transparent 0%, transparent 30%, rgba(3,0,20,0.95) 100%)`,
-                            }}
-                        />
-                        {/* Top Gradient */}
-                        <div
-                            className="absolute inset-0"
-                            style={{
-                                background: `linear-gradient(135deg, rgba(0,255,242,0.05) 0%, transparent 50%)`,
-                            }}
-                        />
 
-                        {/* Hover Buttons */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={isHovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                            transition={{ duration: 0.3 }}
-                            className="absolute inset-0 flex items-center justify-center gap-3"
-                        >
-                            <a
-                                href={project.liveUrl}
-                                className="px-5 py-2.5 text-xs font-bold rounded-xl no-underline tracking-wide uppercase transition-all duration-200 hover:scale-105"
-                                style={{
-                                    background: 'linear-gradient(135deg, #00fff2, #4d7cff)',
-                                    color: '#030014',
-                                    boxShadow: '0 4px 20px rgba(0,255,242,0.3)',
-                                }}
-                            >
-                                ▶ Live
-                            </a>
-                            <a
-                                href={project.codeUrl}
-                                className="px-5 py-2.5 text-xs font-bold rounded-xl no-underline tracking-wide uppercase transition-all duration-200 hover:scale-105"
-                                style={{
-                                    background: 'rgba(255,255,255,0.08)',
-                                    backdropFilter: 'blur(10px)',
-                                    border: '1px solid rgba(255,255,255,0.15)',
-                                    color: '#eef2ff',
-                                }}
-                            >
-                                {'</>'} Code
-                            </a>
-                        </motion.div>
-                    </div>
+const handleMouseMove = (e)=>{
 
-                    {/* Content */}
-                    <div className="p-6">
-                        <h3
-                            className="text-lg font-bold mb-2"
-                            style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)', letterSpacing: '-0.01em' }}
-                        >
-                            {project.title}
-                        </h3>
-                        <p className="text-sm leading-relaxed mb-5" style={{ color: 'var(--color-text-secondary)' }}>
-                            {project.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                            {project.tags.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="px-3 py-1 text-[11px] font-semibold rounded-lg tracking-wide uppercase"
-                                    style={{
-                                        background: 'rgba(0, 255, 242, 0.05)',
-                                        color: '#00fff2',
-                                        border: '1px solid rgba(0, 255, 242, 0.1)',
-                                    }}
-                                >
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
+const rect = e.currentTarget.getBoundingClientRect()
 
-                    {/* Bottom Glow Accent */}
-                    <div
-                        className="absolute bottom-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{
-                            background: 'linear-gradient(90deg, transparent, #00fff240, #b14cff40, transparent)',
-                        }}
-                    />
-                </div>
-            </motion.div>
-        </motion.div>
-    )
+const x = e.clientX - rect.left
+const y = e.clientY - rect.top
+
+const rotateX = -(y - rect.height/2)/20
+const rotateY = (x - rect.width/2)/20
+
+setRotate({x:rotateX,y:rotateY})
+
+}
+
+const reset = ()=>setRotate({x:0,y:0})
+
+
+return(
+
+<div
+className="relative perspective-[1200px]"
+onMouseMove={handleMouseMove}
+onMouseLeave={reset}
+>
+
+<motion.div
+
+initial={{opacity:0,y:40}}
+animate={{opacity:1,y:0}}
+transition={{delay:index*0.12}}
+
+style={{
+transform:`rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`
+}}
+
+className="group relative glass rounded-2xl overflow-hidden border border-white/10 transition-all duration-300"
+
+>
+
+{/* GLOW BORDER */}
+
+<div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition"
+style={{
+background:"linear-gradient(120deg,#00fff2,#b14cff,#ff2d8a)",
+filter:"blur(25px)",
+zIndex:-1
+}}
+/>
+
+
+{/* IMAGE LAYER */}
+
+<div className="relative h-48 overflow-hidden">
+
+<img
+src={project.image}
+alt={project.title}
+className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+/>
+
+<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"/>
+
+</div>
+
+
+{/* CONTENT */}
+
+<div className="p-6 relative">
+
+<h3 className="text-lg font-semibold text-white mb-2">
+{project.title}
+</h3>
+
+<p className="text-sm text-gray-400 mb-4">
+{project.description}
+</p>
+
+
+{/* TECH STACK */}
+
+<div className="flex flex-wrap gap-2 mb-4">
+
+{(project.stack||[]).map(tech=>(
+<motion.span
+key={tech}
+whileHover={{scale:1.15,y:-2}}
+className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 backdrop-blur"
+>
+{tech}
+</motion.span>
+))}
+
+</div>
+
+
+{/* GITHUB STATS */}
+
+{stats && (
+
+<div className="flex gap-4 text-xs text-gray-400 mb-4">
+
+<span>⭐ {stats.stars}</span>
+<span>🍴 {stats.forks}</span>
+<span>👁 {stats.watchers}</span>
+
+</div>
+
+)}
+
+
+{/* BUTTONS */}
+
+<div className="flex gap-4 text-sm">
+
+{project.repo && (
+
+<a
+href={project.repo}
+target="_blank"
+className="text-cyan-400 hover:text-cyan-300 transition"
+>
+GitHub →
+</a>
+
+)}
+
+{project.demo && (
+
+<a
+href={project.demo}
+target="_blank"
+className="text-purple-400 hover:text-purple-300 transition"
+>
+Live Demo →
+</a>
+
+)}
+
+</div>
+
+</div>
+
+</motion.div>
+
+</div>
+
+)
+
 }

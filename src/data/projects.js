@@ -1,13 +1,14 @@
 const projects = [
 {
 id:1,
-title:"BonggoQuery AI ",
-description:"AI-powered assistant built with Python & NLP for intelligent query processing.",
-image:"/projects/bqw.png",
+title:"Droham Private AI",
+description:"A high-performance SaaS landing page for Droham Private Limited — featuring CSS-only 3D animations, buttery-smooth scrolling, and fully responsive design across all devices.",
+
+image:"/projects/droham.png",
 github:"https://github.com/SudipBera083/Droham.git",
 repo:"https://github.com/SudipBera083/Droham.git",
 demo:"https://droham.vercel.app/",
-stack:["React","Django","AI","PostgreSQL"]
+stack:["React","CSS","Web"]
 },
 {
 id:2,

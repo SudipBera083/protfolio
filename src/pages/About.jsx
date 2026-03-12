@@ -84,16 +84,14 @@ Engineering Scalable
 Cloud Platforms
 
 </h1>
-
+<br />
 <p className="text-gray-400 max-w-3xl leading-relaxed text-lg">
-Full-stack engineer specializing in enterprise SaaS platforms and Oracle
-Fusion Cloud technologies. I design scalable backend architectures,
-modern React applications, and intelligent automation systems.
+I help businesses build modern digital products through full-stack development, Oracle Fusion Cloud solutions, scalable APIs, and AI-powered automation.
 </p>
 
 </motion.div>
 
-
+<br /><br />
 <div className="grid lg:grid-cols-2 gap-20">
 
 
@@ -104,6 +102,7 @@ modern React applications, and intelligent automation systems.
 <h2 className="text-2xl font-bold mb-12 text-cyan-400">
 Career Journey
 </h2>
+<br />
 
 <div className="relative border-l border-cyan-400/20 pl-10 space-y-14">
 
@@ -112,7 +111,7 @@ Career Journey
 <div key={i}>
 
 {/* COMPANY */}
-
+<br />
 <div className="flex items-center gap-4 mb-8">
 
 <div className="w-14 h-14 rounded-xl bg-white/5 backdrop-blur flex items-center justify-center border border-cyan-400/20">
@@ -137,7 +136,7 @@ Organization
 
 
 {/* ROLES */}
-
+<br />
 <div className="space-y-6">
 
 {exp.roles.map((role,idx)=>(
@@ -170,6 +169,8 @@ className="p-6 rounded-xl backdrop-blur border border-white/10 bg-white/5 hover:
 </motion.div>
 
 ))}
+
+
 
 </div>
 

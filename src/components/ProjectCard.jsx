@@ -138,7 +138,7 @@ export default function ProjectCard({ project, index }) {
 
 
             {/* LINKS */}
-
+            <br />
             <div className="flex gap-4 text-sm">
 
               {project.repo && (

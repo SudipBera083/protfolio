@@ -1,88 +1,190 @@
-import { motion } from 'framer-motion'
-import ProjectCard from '../components/ProjectCard'
-import projects from '../data/projects'
+import { motion } from "framer-motion"
+import { useState } from "react"
+import ProjectCard from "../components/ProjectCard"
+import projects from "../data/projects"
 
 const stagger = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.12 } },
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } }
 }
 
+const filters = ["All", "AI", "SaaS", "Cloud", "Web"]
+
 export default function Projects() {
-    return (
-        <div className="relative z-10 min-h-screen pt-28">
-            <div className="section-container">
-                {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7 }}
-                    className="mb-16"
-                >
-                    <div className="section-label">
-                        <span className="glow-dot" />
-                        Portfolio
-                    </div>
-                    <h1 className="section-title">
-                        <span className="text-gradient">Featured</span>{' '}
-                        <span style={{ color: 'var(--color-text-primary)' }}>Projects</span>
-                    </h1>
-                    <p className="section-desc">
-                        Building end-to-end digital solutions with modern frontend development, scalable backend architecture, and enterprise cloud technologies.
-                    </p>
-                </motion.div>
 
-                {/* Glow Divider */}
-                <motion.div
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 1.2, delay: 0.4 }}
-                    className="glow-line w-full mb-12 origin-left"
-                />
+  const [activeFilter,setActiveFilter] = useState("All")
 
-                {/* Grid */}
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-7"
-                >
-                    {projects.map((project, i) => (
-                        <ProjectCard key={project.id} project={project} index={i} />
-                    ))}
-                </motion.div>
+  const filteredProjects =
+    activeFilter === "All"
+      ? projects
+      : projects.filter(p =>
+          (p.stack || []).some(s =>
+            s.toLowerCase().includes(activeFilter.toLowerCase())
+          )
+        )
 
-                {/* CTA */}
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: 0.3 }}
-                    className="mt-20 text-center"
-                >
-                    <div
-                        className="glass inline-flex flex-col items-center px-12 py-10"
-                        style={{
-                            borderRadius: '24px',
-                            background: 'linear-gradient(135deg, rgba(0,255,242,0.02), rgba(177,76,255,0.02))',
-                        }}
-                    >
-                        <div className="text-3xl mb-4">🚀</div>
-                        <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}>
-                            Have a Project in Mind?
-                        </h3>
-                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>
-                            Let's collaborate and build something extraordinary together.
-                        </p>
-                        <a href="/contact" className="btn-primary">
-                            Start a Conversation
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M5 12h14M12 5l7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
-                </motion.div>
-            </div>
+  return (
+
+    <div className="relative z-10 min-h-screen pt-28">
+
+      <div className="section-container">
+
+        {/* HEADER */}
+
+        <motion.div
+          initial={{opacity:0,y:40}}
+          animate={{opacity:1,y:0}}
+          transition={{duration:0.7}}
+          className="mb-16"
+        >
+
+          <div className="section-label">
+            <span className="glow-dot"/>
+            Portfolio
+          </div>
+
+          <h1 className="section-title">
+
+            <span className="text-gradient">
+              Innovative
+            </span>{" "}
+
+            <span style={{color:"var(--color-text-primary)"}}>
+              Projects
+            </span>
+
+          </h1>
+
+          <p className="section-desc max-w-2xl">
+            A showcase of full-stack platforms, enterprise cloud systems,
+            AI-powered tools, and modern digital products engineered for
+            performance and scalability.
+          </p>
+
+        </motion.div>
+
+
+        {/* FILTERS */}
+        <br />
+
+        <div className="flex flex-wrap gap-3 mb-12">
+
+          {filters.map(filter => (
+
+            <button
+              key={filter}
+              onClick={()=>setActiveFilter(filter)}
+              className={`px-4 py-2 rounded-xl text-sm border transition
+              ${activeFilter===filter
+                ? "border-cyan-400 text-cyan-300 bg-cyan-400/10"
+                : "border-white/10 text-gray-400 hover:border-white/30"
+              }`}
+            >
+              {filter}
+            </button>
+
+          ))}
+
         </div>
-    )
+
+
+        {/* PROJECT GRID */}
+          <br />
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+
+          {filteredProjects.map((project,i)=>(
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={i}
+            />
+          ))}
+
+        </motion.div>
+
+
+        {/* PROJECT STATS */}
+          <br />
+        <motion.div
+          initial={{opacity:0,y:40}}
+          whileInView={{opacity:1,y:0}}
+          viewport={{once:true}}
+          transition={{duration:0.6}}
+          className="grid md:grid-cols-3 gap-8 mt-20 text-center"
+        >
+
+          {[
+            {value:"10+",label:"Projects Built"},
+            {value:"15+",label:"Technologies Used"},
+            {value:"2+",label:"Years Experience"}
+          ].map(stat=>(
+
+            <div
+              key={stat.label}
+              className="glass p-8 rounded-2xl"
+            >
+
+              <div className="text-3xl font-bold text-cyan-300 mb-1">
+                {stat.value}
+              </div>
+
+              <div className="text-sm text-gray-400">
+                {stat.label}
+              </div>
+
+            </div>
+
+          ))}
+
+        </motion.div>
+
+
+        {/* CTA */}
+          <br />
+        <motion.div
+          initial={{opacity:0,y:40}}
+          whileInView={{opacity:1,y:0}}
+          viewport={{once:true}}
+          transition={{duration:0.7}}
+          className="mt-24 text-center"
+        >
+
+          <div className="glass inline-flex flex-col items-center px-12 py-12 rounded-3xl">
+
+            <div className="text-4xl mb-4">🚀</div>
+
+            <h3
+              className="text-2xl font-bold mb-3"
+              style={{fontFamily:"var(--font-display)"}}
+            >
+              Ready to Build Something Amazing?
+            </h3>
+
+            <p className="text-sm text-gray-400 mb-6 max-w-md">
+              Let's collaborate to create scalable platforms,
+              intelligent systems, and modern digital experiences.
+            </p>
+            <br />
+            <a
+              href="/contact"
+              className="btn-primary"
+            >
+              Start a Conversation →
+            </a>
+
+          </div>
+
+        </motion.div>
+
+      </div>
+
+    </div>
+
+  )
+
 }

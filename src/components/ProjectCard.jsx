@@ -1,10 +1,11 @@
-import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { motion, useAnimationFrame } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 
 export default function ProjectCard({ project, index }) {
 
 const [stats,setStats] = useState(null)
 const [rotate,setRotate] = useState({x:0,y:0})
+const orbitAngle = useRef(0)
 
 useEffect(()=>{
 
@@ -23,15 +24,22 @@ watchers:data.watchers_count
 },[project.github])
 
 
-const handleMouseMove = (e)=>{
+useAnimationFrame((t,delta)=>{
+orbitAngle.current += delta * 0.00025
+})
+
+
+/* MOUSE TILT */
+
+const handleMove = (e)=>{
 
 const rect = e.currentTarget.getBoundingClientRect()
 
 const x = e.clientX - rect.left
 const y = e.clientY - rect.top
 
-const rotateX = -(y - rect.height/2)/20
-const rotateY = (x - rect.width/2)/20
+const rotateX = -(y - rect.height/2)/18
+const rotateY = (x - rect.width/2)/18
 
 setRotate({x:rotateX,y:rotateY})
 
@@ -40,11 +48,13 @@ setRotate({x:rotateX,y:rotateY})
 const reset = ()=>setRotate({x:0,y:0})
 
 
+const radius = 70
+
 return(
 
 <div
-className="relative perspective-[1200px]"
-onMouseMove={handleMouseMove}
+className="relative perspective-[1400px]"
+onMouseMove={handleMove}
 onMouseLeave={reset}
 >
 
@@ -52,38 +62,77 @@ onMouseLeave={reset}
 
 initial={{opacity:0,y:40}}
 animate={{opacity:1,y:0}}
-transition={{delay:index*0.12}}
+transition={{delay:index*0.1}}
 
 style={{
 transform:`rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`
 }}
 
-className="group relative glass rounded-2xl overflow-hidden border border-white/10 transition-all duration-300"
+className="group relative overflow-hidden rounded-2xl border border-white/10 backdrop-blur-lg bg-white/5 transition duration-300"
 
 >
 
+{/* HOLOGRAPHIC LAYER */}
+
+<div
+className="absolute inset-0 opacity-0 group-hover:opacity-100 transition"
+style={{
+background:"linear-gradient(120deg,rgba(0,255,242,0.15),rgba(177,76,255,0.15),rgba(255,45,138,0.15))",
+mixBlendMode:"overlay"
+}}
+/>
+
+
 {/* GLOW BORDER */}
 
-<div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition"
+<div
+className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition"
 style={{
 background:"linear-gradient(120deg,#00fff2,#b14cff,#ff2d8a)",
-filter:"blur(25px)",
+filter:"blur(30px)",
 zIndex:-1
 }}
 />
 
 
-{/* IMAGE LAYER */}
+{/* IMAGE AREA */}
 
-<div className="relative h-48 overflow-hidden">
+<div className="relative h-56 overflow-hidden flex items-center justify-center">
 
 <img
 src={project.image}
 alt={project.title}
-className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+className="absolute w-full h-full object-cover transition duration-700 group-hover:scale-110 opacity-80"
 />
 
 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"/>
+
+
+{/* ORBITING TECH */}
+
+{(project.stack||[]).map((tech,i)=>{
+
+const angle = orbitAngle.current + (i*(Math.PI*2))/(project.stack.length||1)
+
+const x = Math.cos(angle)*radius
+const y = Math.sin(angle)*radius
+
+return(
+
+<div
+key={tech}
+style={{
+position:"absolute",
+transform:`translate(${x}px,${y}px)`
+}}
+className="text-xs px-2 py-1 rounded bg-black/50 border border-white/10 backdrop-blur"
+>
+{tech}
+</div>
+
+)
+
+})}
 
 </div>
 
@@ -101,15 +150,15 @@ className="w-full h-full object-cover transition-transform duration-700 group-ho
 </p>
 
 
-{/* TECH STACK */}
+{/* TECH TAGS */}
 
 <div className="flex flex-wrap gap-2 mb-4">
 
-{(project.stack||[]).map(tech=>(
+{(project.stack||[]).map((tech)=>(
 <motion.span
 key={tech}
 whileHover={{scale:1.15,y:-2}}
-className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 backdrop-blur"
+className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10"
 >
 {tech}
 </motion.span>
@@ -133,7 +182,7 @@ className="text-xs px-2 py-1 rounded bg-white/5 border border-white/10 backdrop-
 )}
 
 
-{/* BUTTONS */}
+{/* ACTION BUTTONS */}
 
 <div className="flex gap-4 text-sm">
 

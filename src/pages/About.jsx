@@ -35,7 +35,7 @@ period:"Aug 2024 — Aug 2025",
 desc:"Built BI Publisher reports, HCM Extract pipelines and SQL/PLSQL data validation frameworks."
 },
 {
-title:"Oracle Cloud HCM Intern",
+title:"CSD Intern",
 period:"Feb 2024 — Jul 2024",
 desc:"Supported HR reporting automation using Fast Formula and BI Publisher development."
 }

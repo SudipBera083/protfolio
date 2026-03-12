@@ -238,7 +238,7 @@ fillOpacity={0.35}
 
 
 {/* TECH STACK */}
-
+<br />
 <h2 className="text-xl font-bold mb-6 text-pink-400">
 Technology Ecosystem
 </h2>

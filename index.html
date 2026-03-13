@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sudip Bera | Portfolio</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: "Segoe UI", sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background: radial-gradient(circle at top, #0f172a, #020617);
+overflow:hidden;
+color:white;
+}
+
+/* animated background */
+body::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+background:linear-gradient(45deg,#00f2ff,#7c3aed,#00f2ff);
+opacity:0.08;
+animation:rotateBG 20s linear infinite;
+}
+
+@keyframes rotateBG{
+0%{transform:rotate(0deg)}
+100%{transform:rotate(360deg)}
+}
+
+.container{
+text-align:center;
+z-index:10;
+}
+
+/* logo / name */
+.logo{
+font-size:42px;
+font-weight:700;
+letter-spacing:3px;
+background:linear-gradient(90deg,#38bdf8,#a78bfa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:10px;
+}
+
+.subtitle{
+font-size:14px;
+color:#94a3b8;
+margin-bottom:40px;
+}
+
+/* loader bar */
+.loader{
+width:260px;
+height:4px;
+background:#1e293b;
+border-radius:10px;
+overflow:hidden;
+margin:auto;
+}
+
+.loader span{
+display:block;
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#38bdf8,#a78bfa);
+animation:load 3s linear forwards;
+}
+
+@keyframes load{
+0%{width:0}
+100%{width:100%}
+}
+
+/* loading text */
+.loading{
+margin-top:15px;
+font-size:13px;
+color:#94a3b8;
+letter-spacing:1px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">SUDIP BERA</div>
+
+<div class="subtitle">
+Full-Stack Developer • Oracle Cloud Specialist • AI Enthusiast
+</div>
+
+<div class="loader">
+<span></span>
+</div>
+
+<div class="loading">Launching Portfolio...</div>
+
+</div>
+
+
+<script>
+
+setTimeout(function(){
+
+window.location.href="https://sudip-protfolio.vercel.app/";
+
+},3000)
+
+</script>
+
+</body>
+</html>
